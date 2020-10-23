@@ -1,11 +1,6 @@
-import express, { Router } from 'express';
+import express from 'express';
 import cors from 'cors';
-
-const routes = Router();
-
-routes.get('/', async (request, response) => {
-  return response.status(200).json({ msg: 'Sucess!' });
-});
+import routes from './routes/index';
 
 const app = express();
 app.use(express.json());
