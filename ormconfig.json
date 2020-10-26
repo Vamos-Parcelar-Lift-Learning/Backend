@@ -1,13 +1,11 @@
 {
-    "name": "mongo",
-    "type": "mongodb",
-    "host": "localhost",
-    "username": "vp-admin",
-    "password": "@dmin",
-    "port": 27017,
-    "database": "vamos-parcelar",
-    "useUnifiedTopology": true,
-    "entities": [
-      "./src/schemas/*.ts"
-    ]
+  "name": "mongo",
+  "type": "mongodb",
+  "host": "localhost",
+  "port": 27017,
+  "database": "vp",
+  "useUnifiedTopology": true,
+  "entities": [
+    "./src/schemas/*.ts"
+  ]
 }

@@ -10,15 +10,6 @@ class Photo {
 
   @Column()
   description: string;
-
-  @Column()
-  filename: string;
-
-  @Column()
-  views: number;
-
-  @Column()
-  isPublished: boolean;
 }
 
 export default Photo;
