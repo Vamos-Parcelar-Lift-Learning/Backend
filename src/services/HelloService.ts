@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { getMongoRepository } from 'typeorm';
 import Photo from '../schemas/PhotoExample';
 
