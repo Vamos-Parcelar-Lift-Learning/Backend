@@ -4,9 +4,6 @@ import Bill from './Bill';
 @Entity()
 class Locator {
   @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
   _id: string;
 
   @Column()

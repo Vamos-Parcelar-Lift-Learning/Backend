@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev:server": "ts-node-dev --inspect --ignore-watch node_modules src/server.ts",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "db:seed": "ts-node-dev --inspect --ignore-watch node_modules src/seeds/index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.8",
