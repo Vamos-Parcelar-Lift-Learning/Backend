@@ -1,31 +1,22 @@
-/* eslint-disable no-await-in-loop */
 import { getMongoRepository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 import Locator from '../schemas/Locator';
 import billSeed from './bill';
 
-async function locatorSeed(): Promise<void> {
+async function locatorSeed(): Promise<Locator[]> {
+  const locators: Locator[] = [];
   const locatorRepository = getMongoRepository(Locator, 'mongo');
-  const nTuples = 10;
-  let i = 0;
-  while (i < nTuples) {
-    const code = Math.floor(1000000000000000 + Math.random() * 9000000000000000)
-      .toString(36)
-      .substr(0, 10);
-    const checkLocatorHasCode = await locatorRepository.findOne({
-      where: { code },
+  const lenLocators = 10;
+  for (let i = 0; i < lenLocators; i += 1) {
+    const code = uuidv4();
+    const locator: Locator = locatorRepository.create({
+      code,
+      bills: billSeed(), // Apenas para teste, posteriormente será chamado o seeds do Bill
     });
-
-    if (!checkLocatorHasCode) {
-      const locator = locatorRepository.create({
-        code,
-        bills: billSeed(), // Apenas para teste, posteriormente será chamado o seeds do Bill
-      });
-      await locatorRepository.save(locator);
-      i += 1;
-    }
+    locators.push(locator);
   }
-  console.log('Seeds do localizador foi executado com sucesso!\n');
+  return locatorRepository.save(locators);
 }
 
 export default locatorSeed;
