@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+/* eslint-disable @typescript-eslint/camelcase */
+import { Entity, Column, ObjectIdColumn } from 'typeorm';
 import Bill from './Bill';
 
 @Entity()
 class Locator {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   _id: string;
 
   @Column()
@@ -17,6 +18,13 @@ class Locator {
 
   @Column()
   updated_at: Date;
+
+  constructor(code: string, bills: Bill[]) {
+    this.code = code;
+    this.bills = bills;
+    this.created_at = new Date();
+    this.updated_at = new Date();
+  }
 }
 
 export default Locator;

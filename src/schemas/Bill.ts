@@ -1,9 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column } from 'typeorm';
 
 class Bill {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column()
   code: string;
 
@@ -21,6 +18,22 @@ class Bill {
 
   @Column()
   amonut: number;
+
+  constructor(
+    code: string,
+    name: string,
+    description: string,
+    issuer: string,
+    amonut: number,
+  ) {
+    this.code = code;
+    this.name = name;
+    this.description = description;
+    this.issuer = issuer;
+    this.amonut = amonut;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    this.expiration_date = new Date();
+  }
 }
 
 export default Bill;
