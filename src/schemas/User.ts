@@ -6,7 +6,7 @@ class User {
   @ObjectIdColumn()
   id: ObjectID;
 
-  @Column()
+  @Column('uuid')
   code: string;
 
   @Column()
