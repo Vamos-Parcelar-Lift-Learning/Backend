@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Entity, Column, ObjectIdColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, Index } from 'typeorm';
+import { ObjectID } from 'mongodb';
 import Bill from './Bill';
 
 @Entity()
 class Locator {
   @ObjectIdColumn()
-  _id: string;
+  _id: ObjectID;
 
   @Column()
+  @Index({ unique: true })
   code: string;
 
   @Column()
