@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import userRouter from './user.routes';
+import adminRouter from './admin.routes';
 import locatorRouter from './locator.routes';
 import sessionsRouter from './sessions.routes';
 
@@ -13,6 +14,7 @@ routes.get('/', (request, response) => {
 });
 
 routes.use(sessionsRouter);
+routes.use('/admin', adminRouter);
 routes.use(authMiddleware);
 
 routes.use('/locator', locatorRouter);
