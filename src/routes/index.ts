@@ -6,7 +6,7 @@ import userRouter from './user.routes';
 const routes = Router();
 
 routes.use(helloRouter);
-routes.use('/locator', locatorRouter);
+routes.use('/locators', locatorRouter);
 routes.use(userRouter);
 
 export default routes;

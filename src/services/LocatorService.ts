@@ -25,7 +25,9 @@ class LocatorService {
     if (isValid) {
       const locatorRepository = getMongoRepository(Locator, 'mongo');
       const locator = await locatorRepository.findOne({ code });
-      return locator;
+      if (locator) {
+        return locator;
+      }
     }
     throw new AppError('Localizador não encontrado.', 404);
   }

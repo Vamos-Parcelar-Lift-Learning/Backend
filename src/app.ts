@@ -5,7 +5,7 @@ import cors from 'cors';
 
 import { createConnections } from 'typeorm';
 import routes from './routes/index';
-import errorHandle from './errors/errorHandle';
+import handleError from './middlewares/handleError';
 
 dotenv.config();
 
@@ -17,6 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(routes);
-app.use(errorHandle);
+app.use(handleError);
 
 export default app;
