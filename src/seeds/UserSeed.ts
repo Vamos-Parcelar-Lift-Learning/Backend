@@ -13,8 +13,8 @@ interface MyUser {
   cashback: number;
   birthdate: Date;
   cpf: string;
-  created: Date;
-  updated: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 class UserSeed {
@@ -26,7 +26,7 @@ class UserSeed {
     for (let i = 0; i < lenUsers; i += 1) {
       const name: string = faker.name.findName();
       const cpf: string = faker.br.cpf();
-      const created: Date = faker.date.past();
+      const created_at: Date = faker.date.past();
 
       const user: MyUser = {
         code: uuidv4(),
@@ -36,8 +36,8 @@ class UserSeed {
         cashback: 0,
         birthdate: this.genBirthDate(),
         cpf,
-        created,
-        updated: created,
+        created_at,
+        updated_at: created_at,
       };
       users.push(user);
     }

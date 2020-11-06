@@ -4,7 +4,7 @@ import { Double, ObjectID } from 'mongodb';
 @Entity()
 class User {
   @ObjectIdColumn()
-  id: ObjectID;
+  _id: ObjectID;
 
   @Column('uuid')
   code: string;

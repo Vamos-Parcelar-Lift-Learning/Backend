@@ -38,3 +38,37 @@ $ yarn install
 # Rode o serviço
 $ yarn dev:server
 ```
+
+## Endpoints
+
+\<host> = deploy-vp ou "http://localhost:3333"
+
+### Administrador (não necessitam de autenticação)
+* **[GET]** \<host>/admin/users - listar todos os usuários
+* **[GET]** \<host>/admin/locators - listar todos os localizadores
+
+### Autenticação
+
+**[POST]** \<host>/sessions/
+
+```json
+{
+	"email": "elizethe6@bol.com.br",
+	"password": "121041"
+}
+```
+
+### Users (necessitam de autenticação)
+
+**[PUT]** \<host>/users/ - atualizar dados de um usuário autenticado
+```json
+{
+	"name": "Elizete II",
+	"birthdate": "1980-05-14T06:02:11.010Z",
+	"cpf": "16273726523"
+}
+```
+
+### Locators (necessitam de autenticação)
+
+**[GET]** \<host>/locators/\<code:string> - buscar os dados de um localizador
