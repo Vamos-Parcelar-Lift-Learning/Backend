@@ -1,12 +1,18 @@
 import { getMongoRepository } from 'typeorm';
 import * as yup from 'yup';
 import Locator from '../schemas/Locator';
+import AppError from '../errors/AppError';
 
 class LocatorService {
   public async getAllLocators(): Promise<Locator[]> {
+    const schema = yup.array().min(1);
     const locatorRepository = getMongoRepository(Locator, 'mongo');
     const locators = await locatorRepository.find();
-    return locators;
+    const isValid = await schema.isValid(locators);
+    if (isValid) {
+      return locators;
+    }
+    throw new AppError('Nenhum localizador encontrado', 404);
   }
 
   public async getLocator(code: string): Promise<Locator | undefined> {
@@ -21,7 +27,7 @@ class LocatorService {
       const locator = await locatorRepository.findOne({ code });
       return locator;
     }
-    return undefined; // Tratar erro
+    throw new AppError('Localizador não encontrado.', 404);
   }
 }
 
