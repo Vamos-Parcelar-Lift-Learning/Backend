@@ -7,6 +7,6 @@ const userController = new UserController();
 const locatorController = new LocatorController();
 
 adminRouter.get('/users', userController.get);
-adminRouter.get('/locators', locatorController.get);
+adminRouter.get('/locators', locatorController.index);
 
 export default adminRouter;

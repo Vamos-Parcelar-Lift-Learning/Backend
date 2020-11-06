@@ -17,7 +17,7 @@ routes.use(sessionsRouter);
 routes.use('/admin', adminRouter);
 routes.use(authMiddleware);
 
-routes.use('/locator', locatorRouter);
+routes.use('/locators', locatorRouter);
 routes.use(userRouter);
 
 export default routes;
