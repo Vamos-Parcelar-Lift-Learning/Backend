@@ -1,5 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import { ObjectID } from 'mongodb';
+
+interface TokenPayload {
+  id: ObjectID;
+  code: string;
+  iat: number;
+  exp: number;
+}
 
 function authMiddleware(req: Request, res: Response, next: NextFunction): void {
   const secret = process.env.SECRET;
@@ -8,7 +16,10 @@ function authMiddleware(req: Request, res: Response, next: NextFunction): void {
   if (token && secret) {
     try {
       const decoded = verify(token, secret);
-      console.log(decoded);
+      const { code } = decoded as TokenPayload;
+      req.user = {
+        code,
+      };
       next();
     } catch (error) {
       res.status(401).json({ msg: 'Token inválido!' });
