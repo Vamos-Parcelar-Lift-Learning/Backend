@@ -15,7 +15,7 @@ routes.get('/', (request, response) => {
 routes.use(sessionsRouter);
 routes.use(authMiddleware);
 
-routes.use('/locator', locatorRouter);
+routes.use('/locators', locatorRouter);
 routes.use(userRouter);
 
 export default routes;

@@ -1,11 +1,11 @@
-import 'reflect-metadata';
-import * as dotenv from 'dotenv';
-
-import cors from 'cors';
 import express from 'express';
-import { createConnections } from 'typeorm';
+import 'express-async-errors';
+import * as dotenv from 'dotenv';
+import cors from 'cors';
 
+import { createConnections } from 'typeorm';
 import routes from './routes/index';
+import handleError from './middlewares/handleError';
 
 dotenv.config();
 
@@ -17,5 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(routes);
+app.use(handleError);
 
 export default app;
