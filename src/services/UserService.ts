@@ -3,14 +3,15 @@ import User from '../schemas/User';
 
 class UserService {
   public async getAllUsers(): Promise<User[]> {
-    // try {
     const userRepository = getMongoRepository(User, 'mongo');
     const users = userRepository.find();
 
     return users;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  }
+
+  public async updateUsers(): Promise<User[]> {
+    const userRepository = getMongoRepository(User, 'mongo');
+    return userRepository.find();
   }
 }
 
