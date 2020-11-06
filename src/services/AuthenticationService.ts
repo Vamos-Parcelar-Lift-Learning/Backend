@@ -34,7 +34,7 @@ class AutheticateUserService {
     }
 
     const secret = process.env.SECRET;
-    const token = sign({ id: user.id, code: user.code }, secret, {
+    const token = sign({ _id: user._id, code: user.code }, secret, {
       expiresIn: '365d',
     });
 

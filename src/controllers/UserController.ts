@@ -16,10 +16,11 @@ export default class UserController {
   public async put(request: Request, response: Response): Promise<Response> {
     const userService = new UserService();
     try {
-      const regNome = new RegExp('^[a-zA-Z ]+$');
-      const regCpf = new RegExp(
-        '(^([0-9]{3})(.[0-9]{3}){2}-[0-9]{2}$|^[0-9]{11}$)',
-      );
+      const regNome = /^[a-zA-Z ]+$/;
+      const regCpf = /(^([0-9]{3})(.[0-9]{3}){2}-[0-9]{2}$|^[0-9]{11}$)/;
+
+      const { name, birthdate, cpf } = request.body;
+      const { code } = request.user;
 
       const schema = object().shape({
         name: str().required().matches(regNome),
@@ -27,17 +28,22 @@ export default class UserController {
         cpf: str().required().matches(regCpf),
       });
 
-      console.log('body =', request.body);
-      if (await schema.isValid(request.body)) {
-        console.log('é valido');
-      } else {
-        console.log('inválido');
+      if (await schema.isValid({ name, birthdate, cpf })) {
+        const user = {
+          code,
+          name,
+          birthdate,
+          cpf: cpf.replace(/[^\d]/g, ''),
+        };
+
+        const result = await userService.updateUsers(user);
+
+        return response.status(200).json(result);
       }
 
-      const users = await userService.updateUsers();
-      return response.status(200).json(users);
+      return response.status(400).json({ err: 'Body inválido' });
     } catch (error) {
-      return response.status(400).json({ msg: error });
+      return response.status(error.statusCode).json({ err: error.message });
     }
   }
 }
