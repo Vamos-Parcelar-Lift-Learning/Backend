@@ -5,9 +5,9 @@ import billSeed from './bill';
 
 async function locatorSeed(): Promise<Locator[]> {
   const generateUniqueCode = (codes: string[]): string => {
-    let code = Math.random().toString(36).substr(6).toUpperCase();
+    let code = Math.random().toString(36).substr(-6).toUpperCase();
     while (codes.includes(code)) {
-      code = Math.random().toString(36).substr(6).toUpperCase();
+      code = Math.random().toString(36).substr(-6).toUpperCase();
     }
     return code;
   };
