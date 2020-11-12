@@ -1,4 +1,4 @@
-import { MongoRepository } from 'typeorm';
+import UserRepository from '../repositories/UserRepository';
 
 import User from '../schemas/User';
 import AppError from '../errors/AppError';
@@ -11,9 +11,9 @@ interface RequestBody {
 }
 
 class UpdateUserService {
-  private userRepository: MongoRepository<User>;
+  private userRepository: UserRepository;
 
-  constructor(userRepository: MongoRepository<User>) {
+  constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
@@ -23,14 +23,14 @@ class UpdateUserService {
     birthdate,
     cpf,
   }: RequestBody): Promise<User> {
-    const user = await this.userRepository.findOne({ code });
+    const user = await this.userRepository.findByCode(code);
 
     if (!user) {
       throw new AppError('Usuário não encontrado', 404);
     }
 
     if (cpf !== user.cpf) {
-      if (await this.userRepository.findOne({ cpf })) {
+      if (await this.userRepository.findByCpf(cpf)) {
         throw new AppError('Cpf informado já cadastrado no sistema');
       }
     }
@@ -39,6 +39,7 @@ class UpdateUserService {
     user.birthdate = birthdate;
     user.cpf = cpf;
     user.updated_at = new Date();
+
     return this.userRepository.save(user);
   }
 }
