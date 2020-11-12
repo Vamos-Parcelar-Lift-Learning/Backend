@@ -40,7 +40,17 @@ export default class DirectParticipantProvider
     return response.statusText;
   }
 
-  public async checkStatus(payload: string): Promise<string> {
-    return 'Hello provider';
+  public async checkStatus(idOrder: string): Promise<string> {
+    const response = await axios
+      .get(`${process.env.DIRECT_PARTICIPANT_URL}/order/${idOrder}`, {
+        headers: { Authorization: 'teste' },
+      })
+      .then(res => {
+        return res;
+      })
+      .catch(() => {
+        throw new AppError('Internal server error', 500);
+      });
+    return response.statusText;
   }
 }
