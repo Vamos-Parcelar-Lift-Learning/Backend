@@ -1,20 +1,22 @@
 import { Request, Response } from 'express';
 import { string as str, date, object } from 'yup';
-import UserService from '../services/UserService';
+import { getMongoRepository } from 'typeorm';
+import UserService from '../services/UpdateUserService';
+
+import User from '../schemas/User';
 
 export default class UserController {
-  public async get(request: Request, response: Response): Promise<Response> {
-    const userService = new UserService();
-    try {
-      const users = await userService.getAllUsers();
-      return response.status(200).json(users);
-    } catch (error) {
-      return response.status(400).json({ msg: error });
-    }
+  public async index(request: Request, response: Response): Promise<Response> {
+    const userRepository = getMongoRepository(User, 'mongo');
+    const users = await userRepository.find();
+
+    return response.status(200).json(users);
   }
 
   public async put(request: Request, response: Response): Promise<Response> {
-    const userService = new UserService();
+    const userRepository = getMongoRepository(User, 'mongo');
+    const updateUserService = new UserService(userRepository);
+
     try {
       const regNome = /^[a-zA-Z.áàâãéèêíïóôõöúçñ ]+$/;
       const regCpf = /(^([0-9]{3})(.[0-9]{3}){2}-[0-9]{2}$|^[0-9]{11}$)/;
@@ -36,11 +38,12 @@ export default class UserController {
           cpf: cpf.replace(/[^\d]/g, ''),
         };
 
-        const result = await userService.updateUsers(user);
+        const result = await updateUserService.execute(user);
 
         return response.status(200).json(result);
       }
       console.log(`body inválido: ${name} ${birthdate} ${cpf}`);
+
       return response.status(400).json({ err: 'Body inválido' });
     } catch (error) {
       return response.status(error.statusCode).json({ err: error.message });
