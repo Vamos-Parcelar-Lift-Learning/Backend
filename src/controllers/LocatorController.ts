@@ -3,10 +3,12 @@ import * as yup from 'yup';
 import AppError from '../errors/AppError';
 import IndexLocatorService from '../services/IndexLocatorService';
 import ShowLocatorService from '../services/ShowLocatorService';
+import ORMLocatorRepository from '../repositories/implementations/ORMLocatorRepository';
 
 export default class LocatorController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const locatorService = new IndexLocatorService();
+    const locatorRepository = new ORMLocatorRepository();
+    const locatorService = new IndexLocatorService(locatorRepository);
     const locators = await locatorService.execute();
     return response.status(200).json({ locators });
   }
@@ -21,7 +23,8 @@ export default class LocatorController {
     if (!isValid) {
       throw new AppError('Localizador não encontrado.', 404);
     }
-    const locatorService = new ShowLocatorService();
+    const locatorRepository = new ORMLocatorRepository();
+    const locatorService = new ShowLocatorService(locatorRepository);
     const locators = await locatorService.execute(code);
     return response.status(200).json({ locators });
   }
