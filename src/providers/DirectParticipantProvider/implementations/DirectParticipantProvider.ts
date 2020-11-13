@@ -1,56 +1,39 @@
 import axios from 'axios';
 import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
+import Order from '../dto/IOrder';
+import OrderResponse from '../dto/IOrderResponse';
 import AppError from '../../../errors/AppError';
-
-interface Buyer {
-  cpf: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  phone: string;
-}
-
-interface Items {
-  item_title: string;
-  quantity: number;
-  unity_price: number;
-}
-
-interface Order {
-  buyer: Buyer;
-  items: Items[];
-  order_ref: string;
-  total: number;
-  wallet: string;
-}
 
 export default class DirectParticipantProvider
   implements IDirectParticipantProvider {
-  public async generateTransaction(order: Order): Promise<string> {
-    const response = await axios
-      .post(`${process.env.DIRECT_PARTICIPANT_URL}/order/`, order, {
+  public async generateTransaction(order: Order): Promise<OrderResponse> {
+    const response = await axios.post(
+      `${process.env.DIRECT_PARTICIPANT_URL}/order/`,
+      order,
+      {
         headers: { Authorization: 'teste' },
-      })
-      .then(res => {
-        return res;
-      })
-      .catch(() => {
-        throw new AppError('Internal server error', 500);
-      });
-    return response.statusText;
+      },
+    );
+
+    if (response.status === 200) {
+      const orderResponse = response.data;
+      return orderResponse;
+    }
+
+    throw new AppError('Internal server error', 500);
   }
 
   public async checkStatus(idOrder: string): Promise<string> {
-    const response = await axios
-      .get(`${process.env.DIRECT_PARTICIPANT_URL}/order/${idOrder}`, {
+    const response = await axios.get(
+      `${process.env.DIRECT_PARTICIPANT_URL}/order/${idOrder}`,
+      {
         headers: { Authorization: 'teste' },
-      })
-      .then(res => {
-        return res;
-      })
-      .catch(() => {
-        throw new AppError('Internal server error', 500);
-      });
-    return response.statusText;
+      },
+    );
+    if (response.status === 200) {
+      return response.statusText;
+    }
+
+    throw new AppError('Internal server error', 500);
   }
 }
