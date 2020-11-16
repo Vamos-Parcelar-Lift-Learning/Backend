@@ -3,7 +3,7 @@ import { getMongoRepository } from 'typeorm';
 import User from '../schemas/User';
 import AppError from '../errors/AppError';
 
-interface RequestBody {
+interface IRequestBody {
   code: string;
   name: string;
   birthdate: Date;
@@ -23,7 +23,7 @@ class UserService {
     name,
     birthdate,
     cpf,
-  }: RequestBody): Promise<User> {
+  }: IRequestBody): Promise<User> {
     const userRepository = getMongoRepository(User, 'mongo');
     const user = await userRepository.findOne({ code });
 

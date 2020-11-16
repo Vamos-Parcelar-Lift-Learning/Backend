@@ -1,8 +1,8 @@
 import axios from 'axios';
-import DictProvider from '../models/IDictProvider';
+import IDictProvider from '../models/IDictProvider';
 
-export default class MockDictProvider implements DictProvider {
-  public async validateKey(key: string): Promise<boolean | undefined> {
+export default class MockDictProvider implements IDictProvider {
+  public async validateKey(key: string): Promise<boolean> {
     const host = process.env.MOCK_DICT_HOST;
     const url = `${host}/api?key=${key}`;
     const config = {
