@@ -1,8 +1,8 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
-import UserRepository from '../UserRepository';
+import IUserRepository from '../UserRepository';
 import User from '../../schemas/User';
 
-class ORMUserRepository implements UserRepository {
+class ORMUserRepository implements IUserRepository {
   private ormRepository: MongoRepository<User>;
 
   constructor() {

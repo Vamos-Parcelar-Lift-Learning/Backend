@@ -1,8 +1,8 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
-import LocatorRepository from '../LocatorRepository';
+import ILocatorRepository from '../LocatorRepository';
 import Locator from '../../schemas/Locator';
 
-class ORMLocatorRepository implements LocatorRepository {
+class ORMLocatorRepository implements ILocatorRepository {
   private ormRepository: MongoRepository<Locator>;
 
   constructor() {
