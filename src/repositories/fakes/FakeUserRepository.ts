@@ -1,6 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
+import { ObjectID } from 'mongodb';
 import IUserRepository from '../UserRepository';
 import User from '../../schemas/User';
 import UserSeed from '../../seeds/UserSeed';
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
 
 class FakeUserRepository implements IUserRepository {
   private users: User[] = [];
@@ -23,6 +26,24 @@ class FakeUserRepository implements IUserRepository {
 
   public async findByCpf(cpf: string): Promise<User | undefined> {
     const user = this.users.find(element => element.cpf === cpf);
+
+    return user;
+  }
+
+  public async create(createUser: ICreateUserDTO): Promise<User> {
+    const user = new User();
+    const created_at = new Date();
+
+    Object.assign(user, {
+      _id: new ObjectID(),
+      code: uuidv4(),
+      ...createUser,
+      cashback: 0,
+      created_at,
+      updated_at: created_at,
+    });
+
+    this.users.push(user);
 
     return user;
   }
