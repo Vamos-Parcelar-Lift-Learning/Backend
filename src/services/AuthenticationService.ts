@@ -4,18 +4,18 @@ import { sign } from 'jsonwebtoken';
 import AppError from '../errors/AppError';
 import User from '../schemas/User';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class AutheticateUserService {
-  public async handle({ email, password }: Request): Promise<Response> {
+  public async handle({ email, password }: IRequest): Promise<IResponse> {
     const userRepository = getMongoRepository(User, 'mongo');
 
     const user = await userRepository.findOne({ where: { email } });

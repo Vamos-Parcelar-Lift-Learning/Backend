@@ -1,19 +1,19 @@
 import { Request, Response } from 'express';
 import * as yup from 'yup';
-import LocatorService from '../services/LocatorService';
 import AppError from '../errors/AppError';
+import IndexLocatorService from '../services/IndexLocatorService';
+import ShowLocatorService from '../services/ShowLocatorService';
+import ORMLocatorRepository from '../repositories/implementations/ORMLocatorRepository';
 
 export default class LocatorController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const locatorService = new LocatorService();
-    const locators = await locatorService.getAllLocators();
+    const locatorRepository = new ORMLocatorRepository();
+    const locatorService = new IndexLocatorService(locatorRepository);
+    const locators = await locatorService.execute();
     return response.status(200).json({ locators });
   }
 
-  public async getLocator(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
+  public async show(request: Request, response: Response): Promise<Response> {
     const { code } = request.params;
     const schema = yup
       .string()
@@ -23,8 +23,9 @@ export default class LocatorController {
     if (!isValid) {
       throw new AppError('Localizador não encontrado.', 404);
     }
-    const locatorService = new LocatorService();
-    const locators = await locatorService.getLocator(code);
+    const locatorRepository = new ORMLocatorRepository();
+    const locatorService = new ShowLocatorService(locatorRepository);
+    const locators = await locatorService.execute(code);
     return response.status(200).json({ locators });
   }
 }
