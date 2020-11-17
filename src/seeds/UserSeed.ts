@@ -5,7 +5,7 @@ import User from '../schemas/User';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const faker = require('faker-br');
 
-interface MyUser {
+interface IMyUser {
   code: string;
   name: string;
   email: string;
@@ -18,8 +18,8 @@ interface MyUser {
 }
 
 class UserSeed {
-  public gen(): Promise<MyUser[]> {
-    const users: MyUser[] = [];
+  public gen(): Promise<IMyUser[]> {
+    const users: IMyUser[] = [];
     const lenUsers = 10;
     const userRepository = getMongoRepository(User, 'mongo');
 
@@ -28,7 +28,7 @@ class UserSeed {
       const cpf: string = faker.br.cpf();
       const created_at: Date = faker.date.past();
 
-      const user: MyUser = {
+      const user: IMyUser = {
         code: uuidv4(),
         name,
         email: this.genEmail(name),

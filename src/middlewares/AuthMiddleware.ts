@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import { ObjectID } from 'mongodb';
 
-interface TokenPayload {
+interface ITokenPayload {
   id: ObjectID;
   code: string;
   iat: number;
@@ -16,7 +16,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction): void {
   if (token && secret) {
     try {
       const decoded = verify(token, secret);
-      const { code } = decoded as TokenPayload;
+      const { code } = decoded as ITokenPayload;
       req.user = {
         code,
       };
