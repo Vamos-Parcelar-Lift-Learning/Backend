@@ -2,17 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { ObjectID } from 'mongodb';
 import IUserRepository from '../UserRepository';
 import User from '../../schemas/User';
-import UserSeed from '../../seeds/UserSeed';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
 
 class FakeUserRepository implements IUserRepository {
   private users: User[] = [];
-
-  constructor() {
-    const userSeed = new UserSeed();
-    const users = userSeed.genInMemory(5);
-    this.users.push(...users);
-  }
 
   public async findAll(): Promise<User[]> {
     return this.users;
