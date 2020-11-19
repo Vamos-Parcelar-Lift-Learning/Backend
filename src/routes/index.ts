@@ -17,9 +17,9 @@ routes.get('/', (request, response) => {
 routes.use(sessionsRouter);
 routes.use('/admin', adminRouter);
 routes.use('/locators', locatorRouter);
-routes.use('/transactions', transactionRouter);
 
 routes.use(authMiddleware);
+routes.use('/transactions', transactionRouter);
 
 routes.use(userRouter);
 

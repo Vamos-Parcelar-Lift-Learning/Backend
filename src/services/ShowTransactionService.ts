@@ -2,20 +2,20 @@ import Transaction from '../schemas/Transaction';
 import AppError from '../errors/AppError';
 import TransactionRepository from '../repositories/TransactionRepository';
 
-class IndexTransactionService {
+class ShowTransactionService {
   private transactionRepository: TransactionRepository;
 
   constructor(transactionRepository: TransactionRepository) {
     this.transactionRepository = transactionRepository;
   }
 
-  public async execute(): Promise<Transaction[]> {
-    const transactions = await this.transactionRepository.findAll();
-    if (!transactions.length) {
-      return [];
+  public async execute(code: string): Promise<Transaction> {
+    const transaction = await this.transactionRepository.findByCode(code);
+    if (!transaction) {
+      throw new AppError('Transação não encontrada.', 404);
     }
-    return transactions;
+    return transaction;
   }
 }
 
-export default IndexTransactionService;
+export default ShowTransactionService;

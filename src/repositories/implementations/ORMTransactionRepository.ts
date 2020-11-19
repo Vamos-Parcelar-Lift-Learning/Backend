@@ -13,6 +13,15 @@ class ORMTransactionRepository implements TransactionRepository {
     const transactions = await this.ormRepository.find();
     return transactions;
   }
+
+  public async findByCode(code: string): Promise<Transaction | undefined> {
+    const transaction = await this.ormRepository.findOne({ code });
+    return transaction;
+  }
+
+  public async save(transaction: Transaction): Promise<Transaction> {
+    return this.ormRepository.save(transaction);
+  }
 }
 
 export default ORMTransactionRepository;
