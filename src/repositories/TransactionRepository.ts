@@ -1,7 +1,7 @@
 import Transaction from '../schemas/Transaction';
 
 export default interface TransactionRepository {
-  findAll(): Promise<Transaction[]>;
+  findAll(user_code: string): Promise<Transaction[]>;
   findByCode(code: string): Promise<Transaction | undefined>;
   save(transaction: Transaction): Promise<Transaction>;
 }

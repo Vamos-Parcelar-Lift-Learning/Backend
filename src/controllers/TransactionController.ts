@@ -15,7 +15,7 @@ export default class TransactionController {
 
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new IndexTransactionService(transactionRepository);
-    const transactions = await transactionService.execute();
+    const transactions = await transactionService.execute(user.code);
     return response.status(200).json({ transactions });
   }
 

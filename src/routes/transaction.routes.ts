@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { TransactionRepository } from 'typeorm';
 import TransactionController from '../controllers/TransactionController';
 
 const transactionRouter = Router();

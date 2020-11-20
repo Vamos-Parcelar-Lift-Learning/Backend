@@ -9,8 +9,8 @@ class IndexTransactionService {
     this.transactionRepository = transactionRepository;
   }
 
-  public async execute(): Promise<Transaction[]> {
-    const transactions = await this.transactionRepository.findAll();
+  public async execute(user_code: string): Promise<Transaction[]> {
+    const transactions = await this.transactionRepository.findAll(user_code);
     if (!transactions.length) {
       return [];
     }

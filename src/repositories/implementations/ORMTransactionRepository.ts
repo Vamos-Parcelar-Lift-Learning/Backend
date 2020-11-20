@@ -9,8 +9,8 @@ class ORMTransactionRepository implements TransactionRepository {
     this.ormRepository = getMongoRepository(Transaction, 'mongo');
   }
 
-  public async findAll(): Promise<Transaction[]> {
-    const transactions = await this.ormRepository.find();
+  public async findAll(user_code: string): Promise<Transaction[]> {
+    const transactions = await this.ormRepository.find({ where: { user_code: user_code}});
     return transactions;
   }
 
