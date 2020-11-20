@@ -27,7 +27,7 @@ describe('UpdateUser', () => {
     userRepository.create(userMaria);
   });
 
-  it('should not found user', async () => {
+  it('should not find user', async () => {
     const updateUser = {
       code: 'aaabbbcc-c0cf-49c7-aeeb-60c1a666647b',
       name: 'Rogéria dos Santos',

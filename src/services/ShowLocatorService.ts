@@ -1,11 +1,11 @@
 import Locator from '../schemas/Locator';
 import AppError from '../errors/AppError';
-import LocatorRepository from '../repositories/LocatorRepository';
+import ILocatorRepository from '../repositories/ILocatorRepository';
 
 class ShowLocatorService {
-  private locatorRepository: LocatorRepository;
+  private locatorRepository: ILocatorRepository;
 
-  constructor(locatorRepository: LocatorRepository) {
+  constructor(locatorRepository: ILocatorRepository) {
     this.locatorRepository = locatorRepository;
   }
 

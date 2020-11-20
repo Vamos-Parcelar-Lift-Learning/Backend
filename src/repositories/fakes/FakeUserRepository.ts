@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ObjectID } from 'mongodb';
-import IUserRepository from '../UserRepository';
+import IUserRepository from '../IUserRepository';
 import User from '../../schemas/User';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
 

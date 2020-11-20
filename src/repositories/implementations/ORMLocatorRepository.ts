@@ -1,5 +1,5 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
-import ILocatorRepository from '../LocatorRepository';
+import ILocatorRepository from '../ILocatorRepository';
 import Locator from '../../schemas/Locator';
 
 class ORMLocatorRepository implements ILocatorRepository {

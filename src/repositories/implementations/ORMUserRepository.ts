@@ -1,6 +1,6 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import IUserRepository from '../UserRepository';
+import IUserRepository from '../IUserRepository';
 import User from '../../schemas/User';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
 

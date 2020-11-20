@@ -1,4 +1,4 @@
-import UserRepository from '../repositories/UserRepository';
+import UserRepository from '../repositories/IUserRepository';
 
 import User from '../schemas/User';
 import AppError from '../errors/AppError';
