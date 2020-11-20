@@ -21,17 +21,20 @@ export default class TransactionController {
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { code } = request.params;
+    const user = request.user;
 
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new ShowTransactionService(transactionRepository);
-    const transactions = await transactionService.execute(code);
-    return response.status(200).json({ transactions });
+    const transaction = await transactionService.execute(code, user.code);
+    return response.status(200).json({ transaction });
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
+    const user = request.user;
+
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new CreateTransactionService(transactionRepository);
-    const transaction = await transactionService.execute(request.body);
+    const transaction = await transactionService.execute(request.body, user.code);
     return response.status(200).json({ transaction });
   }
 }

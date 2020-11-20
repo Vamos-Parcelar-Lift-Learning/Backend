@@ -14,8 +14,8 @@ class ORMTransactionRepository implements TransactionRepository {
     return transactions;
   }
 
-  public async findByCode(code: string): Promise<Transaction | undefined> {
-    const transaction = await this.ormRepository.findOne({ code });
+  public async findByCode(code: string, user_code: string): Promise<Transaction | undefined> {
+    const transaction = await this.ormRepository.findOne({ where: {code: code, user_code: user_code }});
     return transaction;
   }
 

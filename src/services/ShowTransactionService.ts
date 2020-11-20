@@ -9,8 +9,8 @@ class ShowTransactionService {
     this.transactionRepository = transactionRepository;
   }
 
-  public async execute(code: string): Promise<Transaction> {
-    const transaction = await this.transactionRepository.findByCode(code);
+  public async execute(code: string, user_code: string): Promise<Transaction> {
+    const transaction = await this.transactionRepository.findByCode(code, user_code);
     if (!transaction) {
       throw new AppError('Transação não encontrada.', 404);
     }
