@@ -24,7 +24,7 @@ function billSeed(): Bill[] {
       issuer: faker.company.companyName(),
       // eslint-disable-next-line @typescript-eslint/camelcase
       expiration_date: faker.date.between('2020-11-01', '2020-12-31'),
-      amonut: faker.random.number({ min: 50, max: 200 }),
+      amount: faker.random.number({ min: 50, max: 200 }),
     };
 
     billList.push(billDict);

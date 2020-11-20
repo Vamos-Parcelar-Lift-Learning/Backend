@@ -38,7 +38,7 @@
     ],
     "@typescript-eslint/camelcase": [
       "error",
-      {"allow": ["created_at", "updated_at"]}
+      {"allow": ["created_at", "updated_at", "expiration_date"]}
 
     ]
   },

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { getMongoRepository } from 'typeorm';
+import { ObjectID, Double } from 'mongodb';
 import User from '../schemas/User';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -42,6 +43,33 @@ class UserSeed {
       users.push(user);
     }
     return userRepository.save(users);
+  }
+
+  public genInMemory(length: number): User[] {
+    const users: User[] = [];
+
+    for (let i = 0; i < length; i += 1) {
+      const name: string = faker.name.findName();
+      const cpf: string = faker.br.cpf();
+      const created_at: Date = faker.date.past();
+      const cashback: Double = (0 as unknown) as Double;
+
+      const user: User = {
+        _id: new ObjectID(),
+        code: uuidv4(),
+        name,
+        email: this.genEmail(name),
+        password: this.genPassword(),
+        cashback,
+        birthdate: this.genBirthDate(),
+        cpf,
+        created_at,
+        updated_at: created_at,
+      };
+      users.push(user);
+    }
+
+    return users;
   }
 
   private genEmail(name: string): string {
