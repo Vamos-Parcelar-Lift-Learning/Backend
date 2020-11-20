@@ -1,9 +1,9 @@
-import UserRepository from '../repositories/UserRepository';
+import UserRepository from '../repositories/IUserRepository';
 
 import User from '../schemas/User';
 import AppError from '../errors/AppError';
 
-interface RequestBody {
+interface IRequestBody {
   code: string;
   name: string;
   birthdate: Date;
@@ -22,7 +22,7 @@ class UpdateUserService {
     name,
     birthdate,
     cpf,
-  }: RequestBody): Promise<User> {
+  }: IRequestBody): Promise<User> {
     const user = await this.userRepository.findByCode(code);
 
     if (!user) {

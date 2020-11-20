@@ -23,6 +23,7 @@
   "rules": {
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
+    "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -37,7 +38,7 @@
     ],
     "@typescript-eslint/camelcase": [
       "error",
-      {"allow": ["created_at", "updated_at"]}
+      {"allow": ["created_at", "updated_at", "expiration_date"]}
 
     ]
   },
