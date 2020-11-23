@@ -7,7 +7,7 @@ let userRepository: FakeUserRepository;
 let authenticateUser: AuthenticateUserService;
 let userJose: User;
 
-describe('AuthentiacteUser', () => {
+describe('AuthenticateUser', () => {
   beforeEach(async () => {
     userRepository = new FakeUserRepository();
     authenticateUser = new AuthenticateUserService(userRepository);
