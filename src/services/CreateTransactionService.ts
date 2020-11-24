@@ -1,22 +1,30 @@
 import AppError from '../errors/AppError';
 import Transaction from '../schemas/Transaction';
-import TransactionRepository from '../repositories/TransactionRepository';
-import TransactionController from '../controllers/TransactionController';
+import ITransactionRepository from '../repositories/ITransactionRepository';
 
 class CreateTransactionService {
-  constructor(
-    private transactionRepository: TransactionRepository,
-  ) {}
+  private transactionRepository: ITransactionRepository;
 
-  async execute(transactionRequest: Transaction, user_code: string): Promise<Transaction> {
+  constructor(transactionRepository: ITransactionRepository) {
+    this.transactionRepository = transactionRepository;
+  }
 
-    const checkTransactionExists = await this.transactionRepository.findByCode(transactionRequest.code, user_code);
+  async execute(
+    transactionRequest: Transaction,
+    userCode: string,
+  ): Promise<Transaction> {
+    const checkTransactionExists = await this.transactionRepository.findByCode(
+      transactionRequest.code,
+      userCode,
+    );
 
     if (checkTransactionExists) {
       throw new AppError('Essa transação já existe.');
     }
 
-    const transaction = await this.transactionRepository.save(transactionRequest);
+    const transaction = await this.transactionRepository.save(
+      transactionRequest,
+    );
 
     return transaction;
   }

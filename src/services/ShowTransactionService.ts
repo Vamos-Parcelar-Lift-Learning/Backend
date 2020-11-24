@@ -1,16 +1,19 @@
 import Transaction from '../schemas/Transaction';
 import AppError from '../errors/AppError';
-import TransactionRepository from '../repositories/TransactionRepository';
+import ITransactionRepository from '../repositories/ITransactionRepository';
 
 class ShowTransactionService {
-  private transactionRepository: TransactionRepository;
+  private transactionRepository: ITransactionRepository;
 
-  constructor(transactionRepository: TransactionRepository) {
+  constructor(transactionRepository: ITransactionRepository) {
     this.transactionRepository = transactionRepository;
   }
 
-  public async execute(code: string, user_code: string): Promise<Transaction> {
-    const transaction = await this.transactionRepository.findByCode(code, user_code);
+  public async execute(code: string, userCode: string): Promise<Transaction> {
+    const transaction = await this.transactionRepository.findByCode(
+      code,
+      userCode,
+    );
     if (!transaction) {
       throw new AppError('Transação não encontrada.', 404);
     }

@@ -1,16 +1,15 @@
 import Transaction from '../schemas/Transaction';
-import AppError from '../errors/AppError';
-import TransactionRepository from '../repositories/TransactionRepository';
+import ITransactionRepository from '../repositories/ITransactionRepository';
 
 class IndexTransactionService {
-  private transactionRepository: TransactionRepository;
+  private transactionRepository: ITransactionRepository;
 
-  constructor(transactionRepository: TransactionRepository) {
+  constructor(transactionRepository: ITransactionRepository) {
     this.transactionRepository = transactionRepository;
   }
 
-  public async execute(user_code: string): Promise<Transaction[]> {
-    const transactions = await this.transactionRepository.findAll(user_code);
+  public async execute(userCode: string): Promise<Transaction[]> {
+    const transactions = await this.transactionRepository.findAll(userCode);
     if (!transactions.length) {
       return [];
     }
