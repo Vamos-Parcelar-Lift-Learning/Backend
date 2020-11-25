@@ -9,10 +9,10 @@ class IndexTransactionService {
   }
 
   public async execute(userCode: string): Promise<Transaction[]> {
-    const transactions = await this.transactionRepository.findAll(userCode);
-    if (!transactions.length) {
-      return [];
-    }
+    const transactions = await this.transactionRepository.findAllByUser(
+      userCode,
+    );
+
     return transactions;
   }
 }
