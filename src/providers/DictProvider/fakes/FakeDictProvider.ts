@@ -30,6 +30,6 @@ export default class FakeDictProvider implements IDictProvider {
     if (user) {
       return user[0];
     }
-    throw new AppError('Chave DICT não encontrada', 404);
+    throw new AppError('Chave PIX não encontrada', 404);
   }
 }

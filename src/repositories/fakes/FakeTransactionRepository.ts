@@ -13,13 +13,10 @@ class FakeTransactionRepository implements ITransactionRepository {
     return transactions;
   }
 
-  public async findByCode(
-    code: string,
-    user_code: string,
-  ): Promise<Transaction | undefined> {
-    const transaction = this.transactions.find(element => {
-      return element.code === code && element.user_code === user_code;
-    });
+  public async findByCode(code: string): Promise<Transaction | undefined> {
+    const transaction = this.transactions.find(
+      element => element.code === code,
+    );
     return transaction;
   }
 

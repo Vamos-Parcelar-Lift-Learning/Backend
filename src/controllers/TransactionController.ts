@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
+import * as yup from 'yup';
+
 import IndexTransactionService from '../services/IndexTransactionService';
 import ShowTransactionService from '../services/ShowTransactionService';
 import CreateTransactionService from '../services/CreateTransactionService';
 import ORMTransactionRepository from '../repositories/implementations/ORMTransactionRepository';
+import FakeDictProvider from '../providers/DictProvider/fakes/FakeDictProvider';
+// import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
 
 export default class TransactionController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { code } = request.user;
-
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new IndexTransactionService(
       transactionRepository,
@@ -30,15 +33,43 @@ export default class TransactionController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { user } = request;
+    const { key, transaction } = request.body;
+
+    if (!key || !transaction) {
+      return response.status(400).json({ msg: 'Body inválido' });
+    }
+
+    const transactionSchema = yup.object().shape({
+      nickname: yup.string().required(),
+      bills: yup.array().of(
+        yup.object().shape({
+          name: yup.string().required(),
+          description: yup.string().required(),
+          issuer: yup.string().required(),
+          expiration_date: yup.date().required(),
+          amount: yup.number().required(),
+        }),
+      ),
+    });
+
+    const isValid = await transactionSchema.isValid(transaction);
+    if (!isValid) {
+      return response.status(400).json({ msg: 'Body inválido' });
+    }
 
     const transactionRepository = new ORMTransactionRepository();
+    const dictProvider = new FakeDictProvider();
+    // const participantProvider = new FakeParticipantProvider();
     const transactionService = new CreateTransactionService(
       transactionRepository,
+      dictProvider,
+      // partipantProvider,
     );
-    const transaction = await transactionService.execute(
-      request.body,
-      user.code,
+
+    const createTransaction = await transactionService.execute(
+      transaction,
+      key,
     );
-    return response.status(200).json({ transaction });
+    return response.status(200).json(createTransaction);
   }
 }

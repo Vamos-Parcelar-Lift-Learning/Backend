@@ -3,7 +3,7 @@ import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
 import Order from '../dto/IOrder';
 import OrderResponse from '../dto/IOrderResponse';
 
-export default class DirectParticipantProvider
+export default class FakeParticipantProvider
   implements IDirectParticipantProvider {
   public async generateTransaction(order: Order): Promise<OrderResponse> {
     const orderResponse = {

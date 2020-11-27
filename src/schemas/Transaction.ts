@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { Double, ObjectID } from 'mongodb';
+import { Double } from 'mongodb';
 import Bill from './Bill';
+import Participant from './Participant';
 
 @Entity()
 class Transaction {
@@ -10,6 +11,12 @@ class Transaction {
 
   @Column('uuid')
   code: string;
+
+  @Column()
+  key: string;
+
+  @Column()
+  participant: Participant;
 
   @Column()
   nickname: string;
@@ -40,6 +47,13 @@ class Transaction {
 
   @Column()
   updated_at: Date;
+
+  constructor() {
+    const created = new Date();
+    this.cashback_generated = (0 as unknown) as Double;
+    this.created_at = created;
+    this.updated_at = created;
+  }
 }
 
 export default Transaction;
