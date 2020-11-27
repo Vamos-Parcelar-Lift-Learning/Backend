@@ -1,7 +1,8 @@
-import { getMongoRepository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
+import UserRepository from '../repositories/IUserRepository';
 
 import AppError from '../errors/AppError';
+import authConfig from '../config/authConfig';
 import User from '../schemas/User';
 
 interface IRequest {
@@ -15,10 +16,14 @@ interface IResponse {
 }
 
 class AutheticateUserService {
-  public async handle({ email, password }: IRequest): Promise<IResponse> {
-    const userRepository = getMongoRepository(User, 'mongo');
+  private userRepository: UserRepository;
 
-    const user = await userRepository.findOne({ where: { email } });
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError('Usuário ou senha estão incorretos', 401);
@@ -28,14 +33,10 @@ class AutheticateUserService {
       throw new AppError('Usuário ou senha estão incorretos', 401);
     }
 
-    // TODO validar variáveis de ambiente
-    if (!process.env.SECRET) {
-      throw new AppError('Internal server error', 500);
-    }
+    const { secret, expiresIn } = authConfig.jwt;
 
-    const secret = process.env.SECRET;
     const token = sign({ _id: user._id, code: user.code }, secret, {
-      expiresIn: '365d',
+      expiresIn,
     });
 
     delete user.password;

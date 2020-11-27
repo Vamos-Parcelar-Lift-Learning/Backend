@@ -29,6 +29,12 @@ class ORMUserRepository implements IUserRepository {
     return user;
   }
 
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({ where: { email } });
+
+    return user;
+  }
+
   public async create(createUser: ICreateUserDTO): Promise<User> {
     const created_at = new Date();
     const user = this.ormRepository.create({
