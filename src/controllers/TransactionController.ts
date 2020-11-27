@@ -6,6 +6,8 @@ import ShowTransactionService from '../services/ShowTransactionService';
 import CreateTransactionService from '../services/CreateTransactionService';
 import ORMTransactionRepository from '../repositories/implementations/ORMTransactionRepository';
 import FakeDictProvider from '../providers/DictProvider/fakes/FakeDictProvider';
+import ORMUserRepository from '../repositories/implementations/ORMUserRepository';
+import ShowUserService from '../services/ShowUserService';
 // import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
 
 export default class TransactionController {
@@ -21,13 +23,12 @@ export default class TransactionController {
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { code } = request.params;
-    const { user } = request;
 
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new ShowTransactionService(
       transactionRepository,
     );
-    const transaction = await transactionService.execute(code, user.code);
+    const transaction = await transactionService.execute(code);
     return response.status(200).json({ transaction });
   }
 
@@ -56,6 +57,12 @@ export default class TransactionController {
     if (!isValid) {
       return response.status(400).json({ msg: 'Body inválido' });
     }
+
+    const userRepository = new ORMUserRepository();
+    const showUserService = new ShowUserService(userRepository);
+    const showUser = await showUserService.execute(user.code);
+
+    console.log('user = ', showUser);
 
     const transactionRepository = new ORMTransactionRepository();
     const dictProvider = new FakeDictProvider();
