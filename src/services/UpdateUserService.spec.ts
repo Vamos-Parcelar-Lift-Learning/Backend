@@ -6,7 +6,7 @@ describe('UpdateUser', () => {
   const userRepository = new FakeUserRepository();
   const updateUserService = new UpdateUserService(userRepository);
 
-  beforeEach(() => {
+  beforeAll(async () => {
     const userJose = {
       code: 'ce0696d2-c0cf-49c7-aeeb-60c1a666647b',
       name: 'José João',
@@ -23,8 +23,8 @@ describe('UpdateUser', () => {
       birthdate: new Date('1992-04-23'),
       cpf: '32132132100',
     };
-    userRepository.create(userJose);
-    userRepository.create(userMaria);
+    await userRepository.create(userJose);
+    await userRepository.create(userMaria);
   });
 
   it('should not find user', async () => {

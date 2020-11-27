@@ -11,10 +11,17 @@ describe('ShowTransaction', () => {
     transactionRepository,
   );
 
-  beforeEach(() => {
+  beforeAll(async () => {
     const transactionOne: Transaction = {
       _id: '3d7399e0-08e6-4d8c-ba4e-953affd8da5e',
       code: '96089039-b35b-4499-9e36-c0308fea97ee',
+      key: 'joaozinho61df@gmail.com',
+      participant: {
+        order_id: '1',
+        qr_code: 'url_qr_code',
+        qr_code_text: 'url_qr_code_txt',
+        status: 'pending',
+      },
       nickname: 'month bills',
       user_code: 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495',
       amount: 'fake',
@@ -29,6 +36,13 @@ describe('ShowTransaction', () => {
     const transactionTwo: Transaction = {
       _id: 'dca427c8-9e50-4c6f-894a-2c503a8b632b',
       code: '96089039-b35b-4499-9e36-c0308fea97ed',
+      key: 'joaozinho61df@gmail.com',
+      participant: {
+        order_id: '1',
+        qr_code: 'url_qr_code',
+        qr_code_text: 'url_qr_code_txt',
+        status: 'pending',
+      },
       nickname: 'Credit card',
       user_code: 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495',
       amount: 'fake',
@@ -40,37 +54,24 @@ describe('ShowTransaction', () => {
       created_at: new Date('2020-11-20'),
       updated_at: new Date('2020-11-20'),
     };
-    transactionRepository.save(transactionOne);
-    transactionRepository.save(transactionTwo);
+    await transactionRepository.save(transactionOne);
+    await transactionRepository.save(transactionTwo);
   });
 
   it('should not find transaction', async () => {
-    const user_code = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495';
     const code = '96089039-b35b-4499-9e36-c0308fea97aa';
 
     const expectedError = new AppError('Transação não encontrada.', 404);
 
     showTransactionService
-      .execute(code, user_code)
-      .catch(e => expect(e).toMatchObject(expectedError));
-  });
-
-  it('should not find transaction for user', async () => {
-    const user_code = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60480';
-    const code = '96089039-b35b-4499-9e36-c0308fea97ee';
-
-    const expectedError = new AppError('Transação não encontrada.', 404);
-
-    showTransactionService
-      .execute(code, user_code)
+      .execute(code)
       .catch(e => expect(e).toMatchObject(expectedError));
   });
 
   it('should find transaction', async () => {
-    const user_code = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495';
     const code = '96089039-b35b-4499-9e36-c0308fea97ee';
 
-    const transaction = await showTransactionService.execute(code, user_code);
+    const transaction = await showTransactionService.execute(code);
 
     expect(transaction.code).toMatch(code);
     expect(transaction._id).toMatch('3d7399e0-08e6-4d8c-ba4e-953affd8da5e');
