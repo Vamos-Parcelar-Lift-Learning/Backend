@@ -20,7 +20,6 @@ routes.use('/locators', locatorRouter);
 
 routes.use(authMiddleware);
 routes.use('/transactions', transactionRouter);
-
-routes.use(userRouter);
+routes.use('/users', userRouter);
 
 export default routes;

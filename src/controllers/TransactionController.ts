@@ -9,7 +9,7 @@ import ORMTransactionRepository from '../repositories/implementations/ORMTransac
 import FakeDictProvider from '../providers/DictProvider/fakes/FakeDictProvider';
 import ORMUserRepository from '../repositories/implementations/ORMUserRepository';
 import ShowUserService from '../services/ShowUserService';
-// import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
+import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
 
 export default class TransactionController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -19,7 +19,7 @@ export default class TransactionController {
       transactionRepository,
     );
     const transactions = await transactionService.execute(code);
-    return response.status(200).json({ transactions });
+    return response.status(200).json(transactions);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -66,11 +66,11 @@ export default class TransactionController {
 
     const transactionRepository = new ORMTransactionRepository();
     const dictProvider = new FakeDictProvider();
-    // const participantProvider = new FakeParticipantProvider();
+    const participantProvider = new FakeParticipantProvider();
     const transactionService = new CreateTransactionService(
       transactionRepository,
       dictProvider,
-      // partipantProvider,
+      participantProvider,
     );
 
     const createTransaction = await transactionService.execute(

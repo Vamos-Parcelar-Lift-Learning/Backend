@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/camelcase */
 import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
 import Order from '../dto/IOrder';
@@ -7,12 +8,12 @@ export default class FakeParticipantProvider
   implements IDirectParticipantProvider {
   public async generateTransaction(order: Order): Promise<OrderResponse> {
     const orderResponse = {
-      deep_link: 'url_of_digital_wallet',
-      order_id: 'id_of_order',
+      order_id: 'order_id',
       qr_code: 'qr_code_base64',
       qr_code_text: 'qr_code_text',
-      status: 'payment_status',
+      status: 'pending',
     };
+
     return orderResponse;
   }
 

@@ -1,4 +1,4 @@
-interface Buyer {
+interface IBuyer {
   cpf: string;
   email: string;
   first_name: string;
@@ -6,15 +6,16 @@ interface Buyer {
   phone: string;
 }
 
-interface Items {
+interface IItems {
   item_title: string;
   quantity: number;
-  unity_price: number;
+  unit_price: number;
 }
 
-export default interface Order {
-  buyer: Buyer;
-  items: Items[];
+export default interface IOrder {
+  buyer: IBuyer;
+  callback_url: string;
+  items: IItems[];
   order_ref: string;
   total: number;
   wallet: string;

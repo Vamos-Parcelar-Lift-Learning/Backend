@@ -1,22 +1,27 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { v4 as uuidv4 } from 'uuid';
-import AppError from '../errors/AppError';
 import Transaction from '../schemas/Transaction';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import IDictProvider from '../providers/DictProvider/models/IDictProvider';
 import User from '../schemas/User';
+import IDirectParticipantProvider from '../providers/DirectParticipantProvider/models/IDirectParticipantProvider';
+import IOrder from '../providers/DirectParticipantProvider/dto/IOrder';
 
 class CreateTransactionService {
   private transactionRepository: ITransactionRepository;
 
   private dictProvider: IDictProvider;
 
+  private participantProvider: IDirectParticipantProvider;
+
   constructor(
     transactionRepository: ITransactionRepository,
     dictProvider: IDictProvider,
+    participantProvider: IDirectParticipantProvider,
   ) {
     this.transactionRepository = transactionRepository;
     this.dictProvider = dictProvider;
+    this.participantProvider = participantProvider;
   }
 
   async execute(
@@ -48,7 +53,7 @@ class CreateTransactionService {
     }
 
     const name = user.name.split(' ');
-    const participantPayload = {
+    const participantPayload: IOrder = {
       buyer: {
         cpf: user.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'),
         email: user.email,
@@ -65,18 +70,21 @@ class CreateTransactionService {
 
     console.log('participantPayload = ', participantPayload);
 
-    // const { order_id, status } = await this.participantProvider.algo(participantPayload)
+    const participant = await this.participantProvider.generateTransaction(
+      participantPayload,
+    );
 
-    const t: Transaction = {
+    const saveTransaction: Transaction = {
       ...transaction,
+      code: transactionCode,
+      user_code: user.code,
       key,
+      participant,
+      amount: totalAmount.toString(),
+      status: participant.status,
     };
 
-    // const transaction = await this.transactionRepository.save(
-    //   transaction,
-    // );
-
-    return t;
+    return this.transactionRepository.save(saveTransaction);
   }
 }
 
