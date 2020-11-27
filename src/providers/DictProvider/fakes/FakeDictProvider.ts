@@ -27,7 +27,7 @@ export default class FakeDictProvider implements IDictProvider {
 
   public async validateKey(key: string): Promise<IResponseDict> {
     const user: IResponseDict[] = this.users.filter(e => e.Key === key);
-    if (user) {
+    if (user[0]) {
       return user[0];
     }
     throw new AppError('Chave PIX não encontrada', 404);

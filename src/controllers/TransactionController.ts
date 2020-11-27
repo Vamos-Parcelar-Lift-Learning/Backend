@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 
@@ -33,7 +34,6 @@ export default class TransactionController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { user } = request;
     const { key, transaction } = request.body;
 
     if (!key || !transaction) {
@@ -58,11 +58,11 @@ export default class TransactionController {
       return response.status(400).json({ msg: 'Body inválido' });
     }
 
+    // get logged user in database
+    const userCode = request.user.code;
     const userRepository = new ORMUserRepository();
     const showUserService = new ShowUserService(userRepository);
-    const showUser = await showUserService.execute(user.code);
-
-    console.log('user = ', showUser);
+    const user = await showUserService.execute(userCode);
 
     const transactionRepository = new ORMTransactionRepository();
     const dictProvider = new FakeDictProvider();
@@ -75,6 +75,7 @@ export default class TransactionController {
 
     const createTransaction = await transactionService.execute(
       transaction,
+      user,
       key,
     );
     return response.status(200).json(createTransaction);
