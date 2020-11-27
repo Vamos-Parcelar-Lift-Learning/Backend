@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Double, ObjectID } from 'mongodb';
+import { Double } from 'mongodb';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import ShowTransactionService from './ShowTransactionService';
 import AppError from '../errors/AppError';
@@ -60,18 +60,29 @@ describe('ShowTransaction', () => {
 
   it('should not find transaction', async () => {
     const code = '96089039-b35b-4499-9e36-c0308fea97aa';
+    const userCode = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495';
 
     const expectedError = new AppError('Transação não encontrada.', 404);
 
     showTransactionService
-      .execute(code)
+      .execute(code, userCode)
       .catch(e => expect(e).toMatchObject(expectedError));
+  });
+
+  it('should not find transaction for user', async () => {
+    const code = '96089039-b35b-4499-9e36-c0308fea97ee';
+    const userCode = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef61234';
+
+    await expect(
+      showTransactionService.execute(code, userCode),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should find transaction', async () => {
     const code = '96089039-b35b-4499-9e36-c0308fea97ee';
+    const userCode = 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495';
 
-    const transaction = await showTransactionService.execute(code);
+    const transaction = await showTransactionService.execute(code, userCode);
 
     expect(transaction.code).toMatch(code);
     expect(transaction._id).toMatch('3d7399e0-08e6-4d8c-ba4e-953affd8da5e');

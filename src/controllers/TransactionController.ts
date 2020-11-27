@@ -24,13 +24,14 @@ export default class TransactionController {
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { code } = request.params;
+    const { user } = request;
 
     const transactionRepository = new ORMTransactionRepository();
     const transactionService = new ShowTransactionService(
       transactionRepository,
     );
-    const transaction = await transactionService.execute(code);
-    return response.status(200).json({ transaction });
+    const transaction = await transactionService.execute(code, user.code);
+    return response.status(200).json(transaction);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {

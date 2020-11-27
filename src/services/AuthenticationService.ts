@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import UserRepository from '../repositories/IUserRepository';
+import IUserRepository from '../repositories/IUserRepository';
 
 import AppError from '../errors/AppError';
 import authConfig from '../config/authConfig';
@@ -16,9 +16,9 @@ interface IResponse {
 }
 
 class AutheticateUserService {
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 

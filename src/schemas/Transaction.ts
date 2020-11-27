@@ -50,9 +50,9 @@ class Transaction {
 
   constructor() {
     const created = new Date();
-    this.cashback_used = (0 as unknown) as Double;
-    this.total_payment = (0 as unknown) as Double;
-    this.cashback_generated = (0 as unknown) as Double;
+    this.cashback_used = new Double(0);
+    this.total_payment = new Double(0);
+    this.cashback_generated = new Double(0);
     this.created_at = created;
     this.updated_at = created;
   }
