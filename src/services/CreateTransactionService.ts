@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { v4 as uuidv4 } from 'uuid';
+import { Double } from 'mongodb';
 import Transaction from '../schemas/Transaction';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import IDictProvider from '../providers/DictProvider/models/IDictProvider';
 import User from '../schemas/User';
 import IDirectParticipantProvider from '../providers/DirectParticipantProvider/models/IDirectParticipantProvider';
 import IOrder from '../providers/DirectParticipantProvider/dto/IOrder';
+import AppError from '../errors/AppError';
 
 class CreateTransactionService {
   private transactionRepository: ITransactionRepository;
@@ -26,6 +28,7 @@ class CreateTransactionService {
 
   async execute(
     transaction: Transaction,
+    transactionCashback: number,
     user: User,
     key: string,
   ): Promise<Transaction> {
@@ -34,6 +37,11 @@ class CreateTransactionService {
 
     // validates Dict key
     await this.dictProvider.validateKey(key);
+
+    // checks if there is an available cashback
+    if (user.cashback < new Double(transactionCashback)) {
+      throw new AppError('Cashback insuficiente', 401);
+    }
 
     const items = [];
     let totalAmount = 0;
@@ -80,6 +88,7 @@ class CreateTransactionService {
       user_code: user.code,
       key,
       participant,
+      cashback_used: new Double(transactionCashback),
       amount: totalAmount.toString(),
       status: participant.status,
     };

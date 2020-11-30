@@ -35,29 +35,29 @@ export default class TransactionController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { key, transaction } = request.body;
-
-    if (!key || !transaction) {
-      return response.status(400).json({ msg: 'Body inválido' });
-    }
-
-    const transactionSchema = yup.object().shape({
-      nickname: yup.string().required(),
-      bills: yup.array().of(
-        yup.object().shape({
-          name: yup.string().required(),
-          description: yup.string().required(),
-          issuer: yup.string().required(),
-          expiration_date: yup.date().required(),
-          amount: yup.number().required(),
-        }),
-      ),
+    const schema = yup.object().shape({
+      key: yup.string().required(),
+      cashback: yup.number().min(0).required(),
+      transaction: yup.object().shape({
+        nickname: yup.string().required(),
+        bills: yup.array().of(
+          yup.object().shape({
+            name: yup.string().required(),
+            description: yup.string().required(),
+            issuer: yup.string().required(),
+            expiration_date: yup.date().required(),
+            amount: yup.number().positive().required(),
+          }),
+        ),
+      }),
     });
 
-    const isValid = await transactionSchema.isValid(transaction);
+    const isValid = await schema.isValid(request.body);
     if (!isValid) {
       return response.status(400).json({ msg: 'Body inválido' });
     }
+
+    const { key, cashback, transaction } = request.body;
 
     // get logged user in database
     const userCode = request.user.code;
@@ -76,6 +76,7 @@ export default class TransactionController {
 
     const createTransaction = await transactionService.execute(
       transaction,
+      cashback,
       user,
       key,
     );
