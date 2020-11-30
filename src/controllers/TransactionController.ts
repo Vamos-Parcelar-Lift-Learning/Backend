@@ -6,10 +6,10 @@ import IndexTransactionService from '../services/IndexTransactionService';
 import ShowTransactionService from '../services/ShowTransactionService';
 import CreateTransactionService from '../services/CreateTransactionService';
 import ORMTransactionRepository from '../repositories/implementations/ORMTransactionRepository';
-import FakeDictProvider from '../providers/DictProvider/fakes/FakeDictProvider';
 import ORMUserRepository from '../repositories/implementations/ORMUserRepository';
 import ShowUserService from '../services/ShowUserService';
 import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
+import MockDictProvider from '../providers/DictProvider/implementations/MockDictProvider';
 
 export default class TransactionController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -66,7 +66,7 @@ export default class TransactionController {
     const user = await showUserService.execute(userCode);
 
     const transactionRepository = new ORMTransactionRepository();
-    const dictProvider = new FakeDictProvider();
+    const dictProvider = new MockDictProvider();
     const participantProvider = new FakeParticipantProvider();
     const transactionService = new CreateTransactionService(
       transactionRepository,

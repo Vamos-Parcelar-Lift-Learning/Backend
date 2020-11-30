@@ -36,7 +36,11 @@ class CreateTransactionService {
     const transactionCode = uuidv4();
 
     // validates Dict key
-    await this.dictProvider.validateKey(key);
+    const { message, status } = await this.dictProvider.validateKey(key);
+
+    if (status !== 200) {
+      throw new AppError(message, status);
+    }
 
     // checks if there is an available cashback
     if (user.cashback < new Double(transactionCashback)) {

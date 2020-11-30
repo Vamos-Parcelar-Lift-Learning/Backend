@@ -1,12 +1,11 @@
 import axios from 'axios';
 import IDictProvider from '../models/IDictProvider';
-import IResponseDict from '../dto/IResponseDict';
-import AppError from '../../../errors/AppError';
+import IAnswerDict from '../dto/IAnswerDict';
 
 export default class MockDictProvider implements IDictProvider {
-  public async validateKey(key: string): Promise<IResponseDict> {
+  public async validateKey(key: string): Promise<IAnswerDict> {
     const host = process.env.MOCK_DICT_HOST;
-    const url = `${host}/api?key=${key}`;
+    const url = `${host}/api/${key}`;
     const config = {
       headers: {
         Authorization: process.env.TOKEN_MOCK_DICT,
@@ -15,10 +14,18 @@ export default class MockDictProvider implements IDictProvider {
 
     try {
       const res = await axios.get(url, config);
-      const user: IResponseDict = res.data;
-      return user;
+
+      if (!res.data.length) {
+        return { message: 'Chave PIX não encontrada', status: 404 };
+      }
+
+      return { message: '', status: 200 };
     } catch (error) {
-      throw new AppError(error);
+      console.log(error.response.status);
+      return {
+        message: error.response.data.error,
+        status: error.response.status,
+      };
     }
   }
 }
