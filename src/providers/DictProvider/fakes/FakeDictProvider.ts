@@ -1,6 +1,6 @@
 import IDictProvider from '../models/IDictProvider';
 import IResponseDict from '../dto/IResponseDict';
-import AppError from '../../../errors/AppError';
+import IAnswerDict from '../dto/IAnswerDict';
 
 export default class FakeDictProvider implements IDictProvider {
   private users: IResponseDict[] = [];
@@ -25,11 +25,11 @@ export default class FakeDictProvider implements IDictProvider {
     this.users.push(user);
   }
 
-  public async validateKey(key: string): Promise<IResponseDict> {
+  public async validateKey(key: string): Promise<IAnswerDict> {
     const user: IResponseDict[] = this.users.filter(e => e.Key === key);
     if (user[0]) {
-      return user[0];
+      return { message: '', status: 200 };
     }
-    throw new AppError('Chave PIX não encontrada', 404);
+    return { message: 'Chave PIX não encontrada', status: 404 };
   }
 }

@@ -1,4 +1,4 @@
-export default interface IResponseDict {
+export default interface IAnswerDict {
   message: string;
   status: number;
 }

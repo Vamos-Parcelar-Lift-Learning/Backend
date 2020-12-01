@@ -8,10 +8,11 @@ export default class DirectParticipantProvider
   implements IDirectParticipantProvider {
   public async generateTransaction(order: Order): Promise<OrderResponse> {
     const host = process.env.DIRECT_PARTICIPANT_HOST;
-    const url = `${host}/order/`;
+    const token = process.env.TOKEN_DIRECT_PARTICIPANT;
+    const url = `${host}/orders/`;
     const config = {
       headers: {
-        Authorization: 'authorized',
+        Authorization: token,
       },
     };
 
@@ -19,6 +20,7 @@ export default class DirectParticipantProvider
       const res = await axios.post(url, order, config);
       return res.data;
     } catch (error) {
+      console.log(error);
       throw new AppError('Internal server error', 500);
     }
   }
