@@ -14,6 +14,7 @@ export default class LocatorController {
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { code } = request.params;
+
     const schema = yup
       .string()
       .length(6)
@@ -22,6 +23,7 @@ export default class LocatorController {
     if (!isValid) {
       throw new AppError('Localizador não encontrado.', 404);
     }
+
     const locatorRepository = new ORMLocatorRepository();
     const locatorService = new ShowLocatorService(locatorRepository);
     const locators = await locatorService.execute(code);

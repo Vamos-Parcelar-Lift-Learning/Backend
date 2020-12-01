@@ -4,7 +4,7 @@ import userRouter from './user.routes';
 import adminRouter from './admin.routes';
 import locatorRouter from './locator.routes';
 import sessionsRouter from './sessions.routes';
-import transactionsRouter from './transactions.routes';
+import transactionRouter from './transaction.routes';
 
 import authMiddleware from '../middlewares/AuthMiddleware';
 
@@ -17,10 +17,9 @@ routes.get('/', (request, response) => {
 routes.use(sessionsRouter);
 routes.use('/admin', adminRouter);
 routes.use('/locators', locatorRouter);
-routes.use('/transactions', transactionsRouter);
 
 routes.use(authMiddleware);
-
-routes.use(userRouter);
+routes.use('/transactions', transactionRouter);
+routes.use('/users', userRouter);
 
 export default routes;

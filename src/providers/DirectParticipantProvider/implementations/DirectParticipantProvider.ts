@@ -7,20 +7,22 @@ import AppError from '../../../errors/AppError';
 export default class DirectParticipantProvider
   implements IDirectParticipantProvider {
   public async generateTransaction(order: Order): Promise<OrderResponse> {
-    const response = await axios.post(
-      `${process.env.DIRECT_PARTICIPANT_URL}/order/`,
-      order,
-      {
-        headers: { Authorization: 'teste' },
+    const host = process.env.DIRECT_PARTICIPANT_HOST;
+    const token = process.env.TOKEN_DIRECT_PARTICIPANT;
+    const url = `${host}/orders/`;
+    const config = {
+      headers: {
+        Authorization: token,
       },
-    );
+    };
 
-    if (response.status === 200) {
-      const orderResponse = response.data;
-      return orderResponse;
+    try {
+      const res = await axios.post(url, order, config);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw new AppError('Internal server error', 500);
     }
-
-    throw new AppError('Internal server error', 500);
   }
 
   public async checkStatus(idOrder: string): Promise<string> {

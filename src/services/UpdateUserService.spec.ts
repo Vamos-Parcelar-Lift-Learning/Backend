@@ -6,7 +6,7 @@ describe('UpdateUser', () => {
   const userRepository = new FakeUserRepository();
   const updateUserService = new UpdateUserService(userRepository);
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const userJose = {
       code: 'ce0696d2-c0cf-49c7-aeeb-60c1a666647b',
       name: 'José João',
