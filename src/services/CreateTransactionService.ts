@@ -73,7 +73,7 @@ class CreateTransactionService {
         last_name: name[name.length - 1],
         phone: '(11) 99999-9999',
       },
-      callback_url: 'a fazer',
+      callback_url: process.env.CALLBACK_URL || '',
       items,
       order_ref: transactionCode,
       total: totalAmount,
