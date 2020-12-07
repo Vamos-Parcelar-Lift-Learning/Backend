@@ -1,4 +1,4 @@
-import UserRepository from '../repositories/IUserRepository';
+import IUserRepository from '../repositories/IUserRepository';
 
 import User from '../schemas/User';
 import AppError from '../errors/AppError';
@@ -11,9 +11,9 @@ interface IRequestBody {
 }
 
 class UpdateUserService {
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 

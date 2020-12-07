@@ -8,7 +8,6 @@ import CreateTransactionService from '../services/CreateTransactionService';
 import ORMTransactionRepository from '../repositories/implementations/ORMTransactionRepository';
 import ORMUserRepository from '../repositories/implementations/ORMUserRepository';
 import ShowUserService from '../services/ShowUserService';
-import FakeParticipantProvider from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
 import MockDictProvider from '../providers/DictProvider/implementations/MockDictProvider';
 import DirectParticipantProvider from '../providers/DirectParticipantProvider/implementations/DirectParticipantProvider';
 

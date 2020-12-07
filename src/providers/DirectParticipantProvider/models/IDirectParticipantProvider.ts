@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import Order from '../dto/IOrder';
-import OrderResponse from '../dto/IOrderResponse';
+import IOrderResponse from '../dto/IOrderResponse';
+import IStatusResponse from '../dto/IStatusResponse';
 
 export default interface IDirectParticipantProvider {
-  generateTransaction(order: Order): Promise<OrderResponse>;
-  checkStatus(payload: string): Promise<string>;
+  generateTransaction(order: Order): Promise<IOrderResponse>;
+  checkStatus(order_id: string): Promise<IStatusResponse>;
 }
