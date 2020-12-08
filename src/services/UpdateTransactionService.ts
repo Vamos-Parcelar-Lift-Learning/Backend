@@ -23,6 +23,7 @@ class UpdateTransactionService {
 
     const { statusCode, data, error } = participantResponse;
     if (statusCode !== 200 || !data) {
+      console.log('Erro ao consultar participante direto:', error);
       throw new AppError(
         error || 'Erro não identificado no participante direto',
         statusCode,

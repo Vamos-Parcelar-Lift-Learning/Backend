@@ -8,6 +8,8 @@ import ORMTransactionRepository from '../repositories/implementations/ORMTransac
 
 export default class CallbackTransactionController {
   public async patch(request: Request, response: Response): Promise<Response> {
+    console.log('Novo callback recebido');
+    console.log('payload', request.body);
     const schema = yup.object().shape({
       order_id: yup.string().required(),
     });
