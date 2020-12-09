@@ -8,7 +8,6 @@ export default interface IStatus {
   created_at: string;
   external_id: string;
   items: IItem[];
-  order_id: string;
   paid_amount: number;
   status: string;
   total_order: number;
