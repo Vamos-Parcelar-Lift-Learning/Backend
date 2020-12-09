@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Double, ObjectID } from 'mongodb';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
+import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 import AppError from '../errors/AppError';
 import User from '../schemas/User';
 import CreateTransactionService from './CreateTransactionService';
@@ -11,6 +12,7 @@ import ICreateTransactionDTO from '../dtos/ICreateTransactionDTO';
 
 describe('CreateTransaction', () => {
   const transactionRepository = new FakeTransactionRepository();
+  const userRepository = new FakeUserRepository();
   const dictProvider = new FakeDictProvider();
   const directParticipantProvider = new FakeDirectParticipant();
 
@@ -46,8 +48,11 @@ describe('CreateTransaction', () => {
     cashback: new Double(0),
   };
 
+  let user: User;
+
   beforeAll(async () => {
     console.log('teste');
+    user = await userRepository.save(userJose);
   });
 
   it('should create a transaction', async () => {
@@ -57,12 +62,12 @@ describe('CreateTransaction', () => {
     const createTransaction = await transactionService.execute(
       transactionOne,
       cashback,
-      userJose,
+      user,
       key,
     );
 
     expect(createTransaction.nickname).toMatch('minhas contas');
-    expect(createTransaction.user_code).toMatch(userJose.code);
+    expect(createTransaction.user_code).toMatch(user.code);
   });
 
   it('insufficient cashback ', async () => {
@@ -72,7 +77,7 @@ describe('CreateTransaction', () => {
     const expectedError = new AppError('Cashback insuficiente', 401);
 
     transactionService
-      .execute(transactionOne, cashback, userJose, key)
+      .execute(transactionOne, cashback, user, key)
       .catch(e => expect(e).toMatchObject(expectedError));
   });
 
@@ -83,7 +88,7 @@ describe('CreateTransaction', () => {
     const expectedError = new AppError('Chave PIX não encontrada', 404);
 
     transactionService
-      .execute(transactionOne, cashback, userJose, key)
+      .execute(transactionOne, cashback, user, key)
       .catch(e => expect(e).toMatchObject(expectedError));
   });
 });
