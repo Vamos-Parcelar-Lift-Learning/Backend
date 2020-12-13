@@ -3,9 +3,9 @@
 </h1>
 
 <p align="justify">
-  Repositório da aplicação <b>backend</b> com a finalidade de apoiar e organizar o desenvolvimento das funcionalidade do sistema da</p>
+  O projeto em conjunto com o Lift Learning e a <a href="https://vamosparcelar.com.br/blog/vamos-parcelar-e-escolhida-para-o-lift-learning/)">Vamos Parcelar</a> tem como objetivo um estudo sobre a inclusão de uma nova forma de pagamento aos sistemas da Vamos Parcelar, sendo ele o PIX e todos os passos de seu processamento.
 
-[Vamos-Parcelar-Lift-Learning](https://vamosparcelar.com.br/blog/vamos-parcelar-e-escolhida-para-o-lift-learning/).
+  Repositório da aplicação <b>backend</b> com a finalidade de servir de interface entre os serviços externos e o <b>frontend</b>. Além de gerenciar as transações, localizadores e o processo de autenticação.</p>
 
 <p>Este repositório contempla as seguintes funcinalidades:</p>
 
@@ -34,11 +34,15 @@
 
 ### Pacotes necessários
 
-  * docker
   * git
   * node
+    - A partir da versão 12.
 
 ### Subindo o banco de dados
+
+Para rodar o projeto se faz necessário possuir uma instância de MongoDB, e utilizar a **url** do mesmo no arquivo **.env**.
+
+* Utilizando o docker, podemos subir a instância de forma limpa e rápida através do seguinte comando:
 
 ```bash
 $ docker run --name mongo -p 27017:27017 -d mongo
@@ -55,20 +59,7 @@ $ cd Backend
 
 #### Variáveis de Ambiente
 
-Crie na raiz do projeto um arquivo .env com as seguintes configurações:
-
-```bash
-DB_PORT=27017
-DB_URL="mongodb://127.0.0.1:27017/vp"
-
-MOCK_DICT_HOST=https://mock-dict-heroku.herokuapp.com
-DIRECT_PARTICIPANT_HOST=https://mockdirectparticpant.herokuapp.com
-
-TOKEN_MOCK_DICT=mock-pix
-TOKEN_DIRECT_PARTICIPANT=vp
-
-APP_SECRET="vp-secret"
-```
+Crie um arquivo **.env** na raiz do projeto utilizando como exemplo o arquivo **.env.example**.
 
 #### Instalação de dependências
 
