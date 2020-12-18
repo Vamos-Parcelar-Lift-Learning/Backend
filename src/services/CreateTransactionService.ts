@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { v4 as uuidv4 } from 'uuid';
-import { Double } from 'mongodb';
 import Transaction from '../schemas/Transaction';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import IDictProvider from '../providers/DictProvider/models/IDictProvider';
@@ -44,7 +43,7 @@ class CreateTransactionService {
     }
 
     // checks if there is an available cashback
-    if (user.cashback < new Double(transactionCashback)) {
+    if (user.cashback < transactionCashback) {
       throw new AppError('Cashback insuficiente', 401);
     }
 
@@ -93,7 +92,7 @@ class CreateTransactionService {
       user_code: user.code,
       key,
       participant,
-      cashback_used: new Double(transactionCashback),
+      cashback_used: transactionCashback,
       amount: totalAmount.toString(),
       status: participant.status,
     };

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Double } from 'mongodb';
 import AppError from '../errors/AppError';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import UpdateTransactionService from './UpdateTransactionService';
@@ -15,9 +14,9 @@ describe('UpdateTransaction', () => {
 
   beforeAll(async () => {
     const transaction = {
-      cashback_used: new Double(0),
-      total_payment: new Double(0),
-      cashback_generated: new Double(0),
+      cashback_used: 0,
+      total_payment: 0,
+      cashback_generated: 0,
       created_at: new Date('2020-12-08T15:56:24.662Z'),
       updated_at: new Date('2020-12-08T15:56:24.662Z'),
       _id: '5fcfa223114d085b13681d60',

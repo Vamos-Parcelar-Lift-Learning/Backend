@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Double, ObjectID } from 'mongodb';
+import { ObjectID } from 'mongodb';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 import AppError from '../errors/AppError';
@@ -7,7 +7,6 @@ import User from '../schemas/User';
 import CreateTransactionService from './CreateTransactionService';
 import FakeDictProvider from '../providers/DictProvider/fakes/FakeDictProvider';
 import FakeDirectParticipant from '../providers/DirectParticipantProvider/fakes/FakeDirectParticipant';
-import Transaction from '../schemas/Transaction';
 import ICreateTransactionDTO from '../dtos/ICreateTransactionDTO';
 
 describe('CreateTransaction', () => {
@@ -45,7 +44,7 @@ describe('CreateTransaction', () => {
     created_at: new Date(),
     updated_at: new Date(),
     cpf: '12345678900',
-    cashback: new Double(0),
+    cashback: 0,
   };
 
   let user: User;

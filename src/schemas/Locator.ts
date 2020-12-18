@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Entity, Column, ObjectIdColumn, Index } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ObjectIdColumn,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ObjectID } from 'mongodb';
 import Bill from './Bill';
 
@@ -15,17 +22,15 @@ class Locator {
   @Column()
   bills: Bill[];
 
-  @Column()
+  @CreateDateColumn()
   created_at: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updated_at: Date;
 
   constructor(code: string, bills: Bill[]) {
     this.code = code;
     this.bills = bills;
-    this.created_at = new Date();
-    this.updated_at = new Date();
   }
 }
 

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Double } from 'mongodb';
 import Bill from '../schemas/Bill';
 
 class ICreateTransactionDTO {
@@ -13,19 +12,16 @@ class ICreateTransactionDTO {
 
   updated_at: Date;
 
-  total_payment: Double;
+  total_payment: number;
 
-  cashback_used: Double;
+  cashback_used: number;
 
-  cashback_generated: Double;
+  cashback_generated: number;
 
   constructor() {
-    const created = new Date();
-    this.cashback_used = new Double(0);
-    this.total_payment = new Double(0);
-    this.cashback_generated = new Double(0);
-    this.created_at = created;
-    this.updated_at = created;
+    this.cashback_used = 0;
+    this.total_payment = 0;
+    this.cashback_generated = 0;
   }
 }
 
