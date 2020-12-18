@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import AppError from '../errors/AppError';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import Transaction from '../schemas/Transaction';
@@ -40,7 +41,11 @@ class UpdateTransactionService {
 
     transaction.status = data.status;
     transaction.participant.status = data.status;
-    transaction.updated_at = new Date();
+
+    const cashbackToAdd = 5;
+    if (transaction.status === 'approved') {
+      transaction.cashback_generated += cashbackToAdd;
+    }
 
     return this.transactionRepository.save(transaction);
   }

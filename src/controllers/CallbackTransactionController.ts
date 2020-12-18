@@ -5,11 +5,14 @@ import * as yup from 'yup';
 import DirectParticipantProvider from '../providers/DirectParticipantProvider/implementations/DirectParticipantProvider';
 import UpdateTransactionService from '../services/UpdateTransactionService';
 import ORMTransactionRepository from '../repositories/implementations/ORMTransactionRepository';
+import ORMUserRepository from '../repositories/implementations/ORMUserRepository';
+import AddUserCashbackService from '../services/AddUserCashbackService';
 
 export default class CallbackTransactionController {
   public async patch(request: Request, response: Response): Promise<Response> {
     console.log('Novo callback recebido');
     console.log('payload', request.body);
+
     const schema = yup.object().shape({
       order_id: yup.string().required(),
     });
@@ -29,6 +32,15 @@ export default class CallbackTransactionController {
     );
 
     const updateTransaction = await updateTransactionService.execute(order_id);
+
+    const userRepository = new ORMUserRepository();
+    const addUserCashback = new AddUserCashbackService(
+      transactionRepository,
+      userRepository,
+    );
+
+    await addUserCashback.execute(updateTransaction);
+
     return response.status(200).json(updateTransaction);
   }
 }
