@@ -6,6 +6,7 @@ import ITransactionRepository from '../repositories/ITransactionRepository';
 import IDictProvider from '../providers/DictProvider/models/IDictProvider';
 import User from '../schemas/User';
 import IDirectParticipantProvider from '../providers/DirectParticipantProvider/models/IDirectParticipantProvider';
+import ICreateTransactionDTO from '../dtos/ICreateTransactionDTO';
 import IOrder from '../providers/DirectParticipantProvider/dto/IOrder';
 import AppError from '../errors/AppError';
 
@@ -27,7 +28,7 @@ class CreateTransactionService {
   }
 
   async execute(
-    transaction: Transaction,
+    transaction: ICreateTransactionDTO,
     transactionCashback: number,
     user: User,
     key: string,
