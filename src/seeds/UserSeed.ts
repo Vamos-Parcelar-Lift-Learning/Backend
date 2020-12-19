@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { getMongoRepository } from 'typeorm';
-import { ObjectID, Double } from 'mongodb';
+import { ObjectID } from 'mongodb';
 import User from '../schemas/User';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -52,7 +52,6 @@ class UserSeed {
       const name: string = faker.name.findName();
       const cpf: string = faker.br.cpf();
       const created_at: Date = faker.date.past();
-      const cashback: Double = (0 as unknown) as Double;
 
       const user: User = {
         _id: new ObjectID(),
@@ -60,7 +59,7 @@ class UserSeed {
         name,
         email: this.genEmail(name),
         password: this.genPassword(),
-        cashback,
+        cashback: 0,
         birthdate: this.genBirthDate(),
         cpf,
         created_at,

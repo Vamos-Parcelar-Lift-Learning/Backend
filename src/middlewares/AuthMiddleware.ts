@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import { ObjectID } from 'mongodb';
-import { setCommentRange } from 'typescript';
 
 interface ITokenPayload {
   id: ObjectID;

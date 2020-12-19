@@ -1,7 +1,8 @@
-import { Column } from 'typeorm';
+import { Column, Index } from 'typeorm';
 
 class Bill {
   @Column()
+  @Index({ unique: true })
   code: string;
 
   @Column()

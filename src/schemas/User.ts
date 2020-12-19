@@ -4,6 +4,7 @@ import {
   ObjectIdColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { ObjectID } from 'mongodb';
 
@@ -13,6 +14,7 @@ class User {
   _id: ObjectID;
 
   @Column('uuid')
+  @Index({ unique: true })
   code: string;
 
   @Column()
