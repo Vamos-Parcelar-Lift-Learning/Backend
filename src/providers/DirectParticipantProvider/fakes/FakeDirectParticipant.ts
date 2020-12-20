@@ -4,9 +4,9 @@ import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
 import Order from '../dto/IOrder';
 import OrderResponse from '../dto/IOrderResponse';
 import IStatusResponse from '../dto/IStatusResponse';
-import IStatus from '../dto/IStatus';
+import AppError from '../../../errors/AppError';
 
-interface ITransactionStatus extends IStatus {
+interface ITransactionStatus extends IStatusResponse {
   id: string;
 }
 
@@ -64,15 +64,9 @@ export default class FakeParticipantProvider
 
     const transactionStatus = transactionsStatus.find(e => e.id === orderId);
     if (transactionStatus) {
-      const statusCode = 200;
-      const data = transactionStatus;
-
-      return { statusCode, data };
+      return transactionStatus;
     }
 
-    const statusCode = 404;
-    const error = 'Not found';
-
-    return { statusCode, error };
+    throw new AppError('Not found', 404);
   }
 }

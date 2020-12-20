@@ -32,15 +32,10 @@ class CreateTransactionService {
     user: User,
     key: string,
   ): Promise<Transaction> {
-    // validate while code exists?
     const transactionCode = uuidv4();
 
     // validates Dict key
-    const { message, status } = await this.dictProvider.validateKey(key);
-
-    if (status !== 200) {
-      throw new AppError(message, status);
-    }
+    await this.dictProvider.validateKey(key);
 
     // checks if there is an available cashback
     if (user.cashback < transactionCashback) {
