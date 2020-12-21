@@ -26,11 +26,6 @@ class Locator {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  constructor(code: string, bills: Bill[]) {
-    this.code = code;
-    this.bills = bills;
-  }
 }
 
 export default Locator;

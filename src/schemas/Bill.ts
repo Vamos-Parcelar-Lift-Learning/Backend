@@ -19,21 +19,6 @@ class Bill {
 
   @Column()
   amount: number;
-
-  constructor(
-    code: string,
-    name: string,
-    description: string,
-    issuer: string,
-    amount: number,
-  ) {
-    this.code = code;
-    this.name = name;
-    this.description = description;
-    this.issuer = issuer;
-    this.amount = amount;
-    this.expiration_date = new Date();
-  }
 }
 
 export default Bill;
