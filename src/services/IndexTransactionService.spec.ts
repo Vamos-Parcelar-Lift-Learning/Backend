@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import IndexTransactionService from './IndexTransactionService';
 import Transaction from '../schemas/Transaction';

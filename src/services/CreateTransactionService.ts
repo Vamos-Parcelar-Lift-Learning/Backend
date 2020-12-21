@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { v4 as uuidv4 } from 'uuid';
 import Transaction from '../schemas/Transaction';
 import ITransactionRepository from '../repositories/ITransactionRepository';

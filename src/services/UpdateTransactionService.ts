@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import AppError from '../errors/AppError';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import Transaction from '../schemas/Transaction';
@@ -33,7 +32,6 @@ class UpdateTransactionService {
     }
 
     transaction.status = response.status;
-    transaction.participant.status = response.status;
 
     const cashbackToAdd = 5;
     if (transaction.status === 'approved') {

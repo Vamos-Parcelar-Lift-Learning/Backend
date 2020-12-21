@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/camelcase */
 import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
 import Order from '../dto/IOrder';
 import OrderResponse from '../dto/IOrderResponse';
@@ -12,6 +10,7 @@ interface ITransactionStatus extends IStatusResponse {
 
 export default class FakeParticipantProvider
   implements IDirectParticipantProvider {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async generateTransaction(order: Order): Promise<OrderResponse> {
     const orderResponse = {
       order_id: 'order_id',

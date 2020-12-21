@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Request, Response } from 'express';
 import * as yup from 'yup';
 

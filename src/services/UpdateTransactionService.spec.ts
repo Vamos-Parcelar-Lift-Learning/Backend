@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import AppError from '../errors/AppError';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import UpdateTransactionService from './UpdateTransactionService';

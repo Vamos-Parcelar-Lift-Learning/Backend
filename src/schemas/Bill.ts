@@ -32,7 +32,6 @@ class Bill {
     this.description = description;
     this.issuer = issuer;
     this.amount = amount;
-    // eslint-disable-next-line @typescript-eslint/camelcase
     this.expiration_date = new Date();
   }
 }

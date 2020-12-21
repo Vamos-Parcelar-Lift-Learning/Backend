@@ -36,11 +36,7 @@
       "error",
       {"allow": ["_id"]}
     ],
-    "@typescript-eslint/camelcase": [
-      "error",
-      {"allow": ["created_at", "updated_at", "expiration_date"]}
-
-    ]
+    "@typescript-eslint/camelcase": "off"
   },
   "settings": {
     "import/resolver": {
