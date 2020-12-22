@@ -1,12 +1,13 @@
 import axios from 'axios';
 import IDirectParticipantProvider from '../models/IDirectParticipantProvider';
 import Order from '../dto/IOrder';
-import OrderResponse from '../dto/IOrderResponse';
+import IOrderResponse from '../dto/IOrderResponse';
 import AppError from '../../../errors/AppError';
+import IStatusResponse from '../dto/IStatusResponse';
 
 export default class DirectParticipantProvider
   implements IDirectParticipantProvider {
-  public async generateTransaction(order: Order): Promise<OrderResponse> {
+  public async generateTransaction(order: Order): Promise<IOrderResponse> {
     const host = process.env.DIRECT_PARTICIPANT_HOST;
     const token = process.env.TOKEN_DIRECT_PARTICIPANT;
     const url = `${host}/orders/`;
@@ -25,17 +26,24 @@ export default class DirectParticipantProvider
     }
   }
 
-  public async checkStatus(idOrder: string): Promise<string> {
-    const response = await axios.get(
-      `${process.env.DIRECT_PARTICIPANT_URL}/order/${idOrder}`,
-      {
-        headers: { Authorization: 'teste' },
+  public async checkStatus(orderId: string): Promise<IStatusResponse> {
+    const host = process.env.DIRECT_PARTICIPANT_HOST;
+    const token = process.env.TOKEN_DIRECT_PARTICIPANT;
+    const url = `${host}/orders/${orderId}`;
+    const config = {
+      headers: {
+        Authorization: token,
       },
-    );
-    if (response.status === 200) {
-      return response.statusText;
-    }
+    };
 
-    throw new AppError('Internal server error', 500);
+    try {
+      const response = await axios.get(url, config);
+      return { statusCode: response.status, data: response.data };
+    } catch (error) {
+      return {
+        statusCode: error.response.status,
+        error: error.response.data.message,
+      };
+    }
   }
 }

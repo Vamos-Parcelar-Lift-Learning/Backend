@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Double } from 'mongodb';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import ShowTransactionService from './ShowTransactionService';
 import AppError from '../errors/AppError';
@@ -25,9 +24,9 @@ describe('ShowTransaction', () => {
       nickname: 'month bills',
       user_code: 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495',
       amount: 'fake',
-      cashback_used: new Double(10.0),
-      total_payment: new Double(100.0),
-      cashback_generated: new Double(10.2),
+      cashback_used: 10.0,
+      total_payment: 100.0,
+      cashback_generated: 10.2,
       status: 'pending',
       bills: [],
       created_at: new Date('2020-11-20'),
@@ -46,9 +45,9 @@ describe('ShowTransaction', () => {
       nickname: 'Credit card',
       user_code: 'd9db3cc9-bf8e-4b40-bc61-d07c7ef60495',
       amount: 'fake',
-      cashback_used: new Double(70.0),
-      total_payment: new Double(700.0),
-      cashback_generated: new Double(80.2),
+      cashback_used: 70.0,
+      total_payment: 700.0,
+      cashback_generated: 80.2,
       status: 'pending',
       bills: [],
       created_at: new Date('2020-11-20'),

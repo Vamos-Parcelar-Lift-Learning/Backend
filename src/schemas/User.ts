@@ -1,5 +1,11 @@
-import { Entity, Column, ObjectIdColumn } from 'typeorm';
-import { Double, ObjectID } from 'mongodb';
+import {
+  Entity,
+  Column,
+  ObjectIdColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { ObjectID } from 'mongodb';
 
 @Entity()
 class User {
@@ -19,7 +25,7 @@ class User {
   password: string;
 
   @Column()
-  cashback: Double;
+  cashback: number;
 
   @Column()
   birthdate: Date;
@@ -27,10 +33,10 @@ class User {
   @Column()
   cpf: string;
 
-  @Column()
+  @CreateDateColumn()
   created_at: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updated_at: Date;
 }
 
