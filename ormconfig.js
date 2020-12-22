@@ -4,6 +4,7 @@ module.exports = {
   url: process.env.DB_URL,
   port: process.env.DB_PORT,
   useUnifiedTopology: true,
+  synchronize: true,
   entities: (
     process.env.PROD ? ['dist/schemas/*.js'] : ['src/schemas/*.ts']
   ),

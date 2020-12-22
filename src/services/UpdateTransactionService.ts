@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import AppError from '../errors/AppError';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 import Transaction from '../schemas/Transaction';
@@ -22,16 +21,9 @@ class UpdateTransactionService {
       orderId,
     );
 
-    const { statusCode, data, error } = participantResponse;
-    if (statusCode !== 200 || !data) {
-      console.log('Erro ao consultar participante direto:', error);
-      throw new AppError(
-        error || 'Erro não identificado no participante direto',
-        statusCode,
-      );
-    }
+    const response = participantResponse;
 
-    const transactionCode = data.external_id;
+    const transactionCode = response.external_id;
     const transaction = await this.transactionRepository.findByCode(
       transactionCode,
     );
@@ -39,8 +31,7 @@ class UpdateTransactionService {
       throw new AppError('Transação a atualizar não encontrada', 404);
     }
 
-    transaction.status = data.status;
-    transaction.participant.status = data.status;
+    transaction.status = response.status;
 
     const cashbackToAdd = 5;
     if (transaction.status === 'approved') {

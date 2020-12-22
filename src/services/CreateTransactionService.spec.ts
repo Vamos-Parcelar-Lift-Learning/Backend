@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { ObjectID } from 'mongodb';
 import FakeTransactionRepository from '../repositories/fakes/FakeTransactionRepository';
 import FakeUserRepository from '../repositories/fakes/FakeUserRepository';

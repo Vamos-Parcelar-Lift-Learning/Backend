@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import { ObjectID } from 'mongodb';
-import { setCommentRange } from 'typescript';
+import authConfig from '../config/authConfig';
 
 interface ITokenPayload {
   id: ObjectID;
@@ -11,7 +11,7 @@ interface ITokenPayload {
 }
 
 function authMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const secret = process.env.APP_SECRET;
+  const { secret } = authConfig.jwt;
   const token = req.headers.authorization;
 
   if (token && secret) {

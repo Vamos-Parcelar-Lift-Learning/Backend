@@ -1,5 +1,5 @@
-import IAnswerDict from '../dto/IAnswerDict';
+import IResponseDict from '../dto/IResponseDict';
 
 export default interface IDictProvider {
-  validateKey(key: string): Promise<IAnswerDict>;
+  validateKey(key: string): Promise<IResponseDict>;
 }

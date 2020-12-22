@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import Bill from '../schemas/Bill';
 
 class ICreateTransactionDTO {

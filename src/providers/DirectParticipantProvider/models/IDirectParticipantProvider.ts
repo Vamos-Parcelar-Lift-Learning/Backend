@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import Order from '../dto/IOrder';
 import IOrderResponse from '../dto/IOrderResponse';
 import IStatusResponse from '../dto/IStatusResponse';

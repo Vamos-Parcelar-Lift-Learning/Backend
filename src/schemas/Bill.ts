@@ -1,7 +1,8 @@
-import { Column } from 'typeorm';
+import { Column, Index } from 'typeorm';
 
 class Bill {
   @Column()
+  @Index({ unique: true })
   code: string;
 
   @Column()
@@ -18,22 +19,6 @@ class Bill {
 
   @Column()
   amount: number;
-
-  constructor(
-    code: string,
-    name: string,
-    description: string,
-    issuer: string,
-    amount: number,
-  ) {
-    this.code = code;
-    this.name = name;
-    this.description = description;
-    this.issuer = issuer;
-    this.amount = amount;
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    this.expiration_date = new Date();
-  }
 }
 
 export default Bill;

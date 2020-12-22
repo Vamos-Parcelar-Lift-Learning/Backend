@@ -22,7 +22,7 @@ export default class DirectParticipantProvider
       return res.data;
     } catch (error) {
       console.log(error);
-      throw new AppError('Internal server error', 500);
+      throw new AppError(error.response.data.message, error.response.status);
     }
   }
 
@@ -38,12 +38,10 @@ export default class DirectParticipantProvider
 
     try {
       const response = await axios.get(url, config);
-      return { statusCode: response.status, data: response.data };
+      return response.data;
     } catch (error) {
-      return {
-        statusCode: error.response.status,
-        error: error.response.data.message,
-      };
+      console.log(error);
+      throw new AppError(error.response.data.message, error.response.status);
     }
   }
 }

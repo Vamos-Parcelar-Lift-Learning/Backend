@@ -9,7 +9,7 @@ export default class LocatorController {
     const locatorRepository = new ORMLocatorRepository();
     const locators = await locatorRepository.findAll();
 
-    return response.status(200).json({ locators });
+    return response.status(200).json(locators);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -27,6 +27,6 @@ export default class LocatorController {
     const locatorRepository = new ORMLocatorRepository();
     const locatorService = new ShowLocatorService(locatorRepository);
     const locators = await locatorService.execute(code);
-    return response.status(200).json({ locators });
+    return response.status(200).json(locators);
   }
 }

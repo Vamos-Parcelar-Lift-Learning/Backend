@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import ITransactionRepository from '../ITransactionRepository';
 import Transaction from '../../schemas/Transaction';
 

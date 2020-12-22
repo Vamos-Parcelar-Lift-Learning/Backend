@@ -9,7 +9,6 @@ async function indexSeed(): Promise<void> {
   const userSeed = new UserSeed();
   dotenv.config();
   try {
-    console.clear();
     await createConnections();
     console.log('Generating Seeds');
     await userSeed.gen();

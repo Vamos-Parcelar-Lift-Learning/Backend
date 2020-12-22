@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import {
   Entity,
   Column,
   ObjectIdColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import Bill from './Bill';
 import Participant from './Participant';
@@ -15,6 +15,7 @@ class Transaction {
   _id: string;
 
   @Column('uuid')
+  @Index({ unique: true })
   code: string;
 
   @Column()
