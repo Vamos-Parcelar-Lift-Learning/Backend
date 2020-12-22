@@ -17,8 +17,8 @@ export default class MockDictProvider implements IDictProvider {
       const res = await axios.get(url, config);
       return res.data;
     } catch (error) {
-      console.log(error.response.status);
-      throw new AppError(error.response.data.message, error.response.status);
+      console.log('Error in PIX key validation: ', error.response.data);
+      throw new AppError(error.response.data.msg, error.response.status);
     }
   }
 }
